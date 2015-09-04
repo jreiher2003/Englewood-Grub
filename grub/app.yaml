@@ -1,0 +1,50 @@
+application: grub
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+default_expiration: "5d"
+
+builtins:
+- appstats: on
+- admin_redirect: on
+- deferred: on
+- remote_api: on
+
+libraries:
+- name: jinja2
+  version: "2.6"
+- name: markupsafe
+  version: "0.15"
+
+inbound_services:
+- warmup
+
+handlers:
+# - url: /favicon.ico
+#   static_files: menu/static/image/favicon.ico
+#   upload: menu/static/image/favicon.ico
+
+- url: /*.svg
+  static_files: menu/static/image/*.svg
+  upload: menu/static/image/*.svg
+  mime_type: image/svg+xml
+  # http_headers:
+    # Content-Type: 'image/svg+xml'
+
+- url: /robots.txt
+  static_files: menu/static/robots.txt
+  upload: menu/static/robots.txt
+
+# - url: /gae_mini_profiler/static
+#   static_dir: lib/gae_mini_profiler/static
+
+# - url: /gae_mini_profiler/.*
+#   script: lib.gae_mini_profiler.main.menu
+
+- url: /static
+  static_dir: menu/static
+
+- url: .*
+  script: menu.app
