@@ -56,13 +56,31 @@ def user_count():
 	new_query = session.query(User).filter(User.name.like("%jeff")).count()
 	print new_query
 
-if __name__ == '__main__':
-	user_query()
-	print "\n"
-	user_query2()
-	print "\n"
-	user_filter()
-	print "\n"
-	user_like()
-	print "\n"
-	user_count()
+# if __name__ == '__main__':
+# 	user_query()
+# 	print "\n"
+# 	user_query2()
+# 	print "\n"
+# 	user_filter()
+# 	print "\n"
+# 	user_like()
+# 	print "\n"
+# 	user_count()
+
+##################################################################
+# Working with Related objects
+jack = User(name='jack', fullname='Jack Bean', password='12345')
+jack.addresses = [Address(email_address='jack@google.com'),
+				  Address(email_address='j25@yahoo.com')]
+
+# print jack.addresses[1]
+# print '\n'
+# print jack.addresses[1].user
+# session.add(jack)
+# session.commit()
+
+jack = session.query(User).filter_by(name='jack').first()
+# print "\n"
+# print jack
+# print "\n"
+# print jack.addresses
