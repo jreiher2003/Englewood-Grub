@@ -15,6 +15,6 @@ class User(Base):
          return "<User(name='%s', fullname='%s', password='%s')>" % (self.name, self.fullname, self.password)
 
 
-engine = create_engine('sqlite:///:memory:', echo=True)
+engine = create_engine('sqlite:///orm.db', echo=True)
 
 Base.metadata.create_all(engine)
