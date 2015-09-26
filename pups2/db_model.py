@@ -30,12 +30,28 @@ class Puppy(Base):
 	weight = Column(Integer)
 	shelter_id = Column(Integer, ForeignKey('shelter.id'))
 	shelter = relationship("Shelter", backref=backref('puppy', order_by=id))
-
+	
 	def __repr__(self):
 		return "<Shelter(name='%s', dob='%s',breed='%s',gender='%s',weight='%s',shelter_id='%s',shelter='%s')>"\
 				% (name,dob,breed,gender,weight,shelter_id,shelter)
 
 
+class Profile(Base):
+	__tablename__ = 'profile'
+	id = Column(Integer, primary_key=True)
+	picture = Column(String)
+	description = Column(String(300))
+	specialNeeds = Column(String(300))
+	puppy_id = Column(Integer, ForeignKey('puppy.id'))
+	profile = relationship('Puppy', backref=backref('profile', order_by=id))
+
+	def __repr__(self):
+		return "<Profile(picture='%s',description='%s', specialNeeds='%s')>" % (picture, description, specialNeeds)
+
+# class Adopter(Base):
+# 	__tablename__ = 'adopter'
+# 	id = Column(Integer, primary_key=True)
+# 	name = Column(String(80), nullable=False)
 
 
 
