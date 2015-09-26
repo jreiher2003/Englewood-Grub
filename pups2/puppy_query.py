@@ -1,3 +1,4 @@
+
 from db_model import *
 from sqlalchemy import desc
 from sqlalchemy.orm import sessionmaker
@@ -13,12 +14,12 @@ def all_puppies():
 
 def puppyLess6mo():
 	young_pups = session.query(Puppy).filter(
-		Puppy.dateOfBirth.between('2015-03-25','2015-09-26')).order_by('puppy.dateOfBirth desc')
+		Puppy.dateOfBirth.between('2015-03-25','2015-09-26')).order_by('puppy.dateOfBirth desc').all()
 	for pup in young_pups:
 		print pup.name, pup.dateOfBirth	
 
 def puppyWeight():
-	pupWeight = session.query(Puppy).order_by('puppy.weight asc')
+	pupWeight = session.query(Puppy).order_by('puppy.weight asc').all()
 	for pup in pupWeight:
 		print pup.name, pup.weight
 
@@ -31,6 +32,6 @@ def puppy_by_shelter():
 
 if __name__ == '__main__':
 	# all_puppies()
-	# puppyLess6mo()
+	puppyLess6mo()
 	# puppyWeight()
-	puppy_by_shelter()
+	# puppy_by_shelter()
