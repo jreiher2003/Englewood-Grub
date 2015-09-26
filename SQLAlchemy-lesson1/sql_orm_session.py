@@ -84,3 +84,6 @@ jack = session.query(User).filter_by(name='jack').first()
 # print jack
 # print "\n"
 # print jack.addresses
+
+###################################################################
+# Querying with Joins
