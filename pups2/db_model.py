@@ -32,7 +32,7 @@ class Puppy(Base):
 	shelter = relationship("Shelter", backref=backref('puppy', order_by=id))
 
 	def __repr__(self):
-		return "<Shelter(name='%s', dob='%s',breed='%s',gender='%s',weight='%s',shelter_id='%s',shelter='%s')>"\
+		return "<Puppy(name='%s', dob='%s',breed='%s',gender='%s',weight='%s',shelter_id='%s',shelter='%s')>"\
 				% (name,dob,breed,gender,weight,shelter_id,shelter)
 
 
