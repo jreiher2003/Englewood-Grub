@@ -30,13 +30,19 @@ class Puppy(Base):
 	weight = Column(Integer)
 	shelter_id = Column(Integer, ForeignKey('shelter.id'))
 	shelter = relationship("Shelter", backref=backref('puppy', order_by=id))
-
+	# profile = relationship("Profile", uselist=False, backref='puppy')
+	
 	def __repr__(self):
 		return "<Puppy(name='%s', dob='%s',breed='%s',gender='%s',weight='%s',shelter_id='%s',shelter='%s')>"\
 				% (name,dob,breed,gender,weight,shelter_id,shelter)
 
-
-
+class Profile(Base):
+	__tablename__ = 'profile'
+	id = Column(Integer, primary_key=True)
+	photo = Column(String)
+	description = Column(String(300))
+	specialNeeds = Column(String(300))
+	puppy_id = Column(Integer, ForeignKey('puppy.id'))
 
 
 engine = create_engine('sqlite:///puppyshelter.db', echo=True)
