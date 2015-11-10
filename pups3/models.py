@@ -17,3 +17,4 @@ class Shelter(Base):
 engine = create_engine("sqlite:///puppyshelter.db")
 
 Base.metadata.create_all(engine)
+
