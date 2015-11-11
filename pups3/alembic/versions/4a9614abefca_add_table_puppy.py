@@ -1,14 +1,14 @@
-"""create puppy table
+"""add table puppy
 
-Revision ID: 154bfbe229a6
-Revises: 
-Create Date: 2015-11-11 08:44:06.675000
+Revision ID: 4a9614abefca
+Revises: 154bfbe229a6
+Create Date: 2015-11-11 14:07:49.839000
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '154bfbe229a6'
-down_revision = None
+revision = '4a9614abefca'
+down_revision = '154bfbe229a6'
 branch_labels = None
 depends_on = None
 
@@ -30,3 +30,4 @@ def upgrade():
 
 def downgrade():
     op.drop_table('puppy')
+
