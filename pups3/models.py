@@ -14,16 +14,6 @@ class Shelter(Base):
 	zipCode = Column(String(10))
 	website = Column(String)
 
-class Puppy(Base):
-	__tablename__ = 'puppy'
-	id = Column(Integer, primary_key=True)
-	name = Column(String(250), nullable=False)
-	gender = Column(String(6), nullable=False)
-	dateOfBirth = Column(Date)
-	picture = Column(String)
-	weight = Column(Numeric(10))
-
-
 
 engine = create_engine("sqlite:///puppyshelter.db")
 
