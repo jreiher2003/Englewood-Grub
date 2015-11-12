@@ -18,11 +18,11 @@ import sqlalchemy as sa
 
 def upgrade():
     op.create_table(
-    	'adpoter',
-    	sa.Column('id', Integer, primary_key=True),
-    	sa.Column('name', sa.Sting, nullable=False)
+    	'adopter',
+    	sa.Column('id', sa.Integer, primary_key=True),
+    	sa.Column('name', sa.String, nullable=False)
 	)
 
 
 def downgrade():
-    op.drop_table('adpoter')
+    op.drop_table('adopter')
