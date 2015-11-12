@@ -6,11 +6,6 @@ from sqlalchemy import create_engine
 Base = declarative_base()
 
 
-association_table = Table('association', Base.metadata,
-    Column('puppy_id', Integer, ForeignKey('puppy.id')),
-    Column('adopter_id', Integer, ForeignKey('adopter.id'))
-)
-
 class Shelter(Base):
 	__tablename__ = 'shelter'
 	id = Column(Integer, primary_key=True)
@@ -32,7 +27,7 @@ class Puppy(Base):
     shelter_id = Column(Integer, ForeignKey('shelter.id'))
     shelter = relationship(Shelter)
     profile = relationship("Profile", uselist=False, backref="puppy")
-    adopter_id = relationship("Child", secondary=association_table, backref="puppy")
+    adopter_id = relationship("Adopter", secondary='puppy_adopter_link', backref="puppy")
 
 class Profile(Base):
     __tablename__ = 'profile'
@@ -46,6 +41,12 @@ class Adopter(Base):
     __tablename__ = 'adopter'
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
+    puppy_id = relationship("Puppy", secondary='puppy_adopter_link', backref="adopter")
+
+class PuppyAdopterLink(Base):
+    __tablename__ = 'puppy_adopter_link'
+    puppy_id = Column(Integer, ForeignKey('puppy.id'), primary_key=True)
+    adopter_id = Column(Integer, ForeignKey('adopter.id'), primary_key=True)
 
 engine = create_engine("sqlite:///puppyshelter.db")
 
