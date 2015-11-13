@@ -28,16 +28,52 @@ def shelters_where_puppies_are():
 		print s.name, p.name
 
 def count_puppys_in_each_shelter():
+	first = session.query(Shelter).filter_by(id = 1).one()
 	one = session.query(Shelter,Puppy).filter(Shelter.id==Puppy.shelter_id).filter(Shelter.id==1).count()
-	print one
+	print first.name,one
+	first.current_occupancy = one
+	session.add(first)
+	session.commit()
+
+	second = session.query(Shelter).filter_by(id = 2).one()
 	two = session.query(Shelter,Puppy).filter(Shelter.id==Puppy.shelter_id).filter(Shelter.id==2).count()
-	print two
+	print second.name, two
+	second.current_occupancy = two
+	session.add(second)
+	session.commit()
+
+	third = session.query(Shelter).filter_by(id = 3).one()
 	three = session.query(Shelter,Puppy).filter(Shelter.id==Puppy.shelter_id).filter(Shelter.id==3).count()
-	print three
+	print third.name, three
+	third.current_occupancy = three
+	session.add(third)
+	session.commit()
+
+	fourth = session.query(Shelter).filter_by(id = 4).one()
 	four = session.query(Shelter,Puppy).filter(Shelter.id==Puppy.shelter_id).filter(Shelter.id==4).count()
-	print four
+	print fourth.name,four
+	fourth.current_occupancy = four
+	session.add(fourth)
+	session.commit()
+
+	fifth = session.query(Shelter).filter_by(id = 5).one()
 	five = session.query(Shelter,Puppy).filter(Shelter.id==Puppy.shelter_id).filter(Shelter.id==5).count()
-	print five
+	print fifth.name,five
+	fifth.current_occupancy = five
+	session.add(fifth)
+	session.commit()
+
+def checkPuppyIn(puppy):
+	shel = 1
+	shelter = session.query(Shelter).filter_by(id = shel).one()
+	if shel.maximum_capacity > shel.current_occupancy:
+		session.add(puppy)
+		session.commit()
+	elif:
+		shel += 1
+	else:
+		"We need to add more shelters"
+
 
 if __name__ == '__main__':
 	# query_all()
