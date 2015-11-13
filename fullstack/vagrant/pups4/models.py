@@ -15,8 +15,6 @@ class Shelter(Base):
 	state = Column(String(20))
 	zipCode = Column(String(10))
 	website = Column(String)
-    maximum_capacity = Column(Integer)
-    # current_occupancy = Column(Integer)
 
 class Puppy(Base):
     __tablename__ = 'puppy'
@@ -39,18 +37,6 @@ class Profile(Base):
     specialNeeds = Column(String)
     puppy_id = Column(Integer, ForeignKey('puppy.id'))
 
-class Adopter(Base):
-    __tablename__ = 'adopter'
-    id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-    puppy_id = relationship("Puppy", secondary='puppy_adopter_link', backref="adopter")
-
-class PuppyAdopterLink(Base):
-    __tablename__ = 'puppy_adopter_link'
-    puppy_id = Column(Integer, ForeignKey('puppy.id'), primary_key=True)
-    adopter_id = Column(Integer, ForeignKey('adopter.id'), primary_key=True)
-
-engine = create_engine("sqlite:///puppyshelter.db")
+engine = create_engine('postgresql://localhost/mydatabase')
 
 Base.metadata.create_all(engine)
-
