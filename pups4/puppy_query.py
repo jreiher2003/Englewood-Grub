@@ -66,13 +66,16 @@ def count_puppys_in_each_shelter():
 def checkPuppyIn(puppy):
 	shel = 1
 	shelter = session.query(Shelter).filter_by(id = shel).one()
-	if shel.maximum_capacity > shel.current_occupancy:
+	if shelter.maximum_capacity > shelter.current_occupancy:
 		session.add(puppy)
 		session.commit()
 	elif:
 		shel += 1
 	else:
 		"We need to add more shelters"
+
+def adoptAPuppy():
+	
 
 
 if __name__ == '__main__':
