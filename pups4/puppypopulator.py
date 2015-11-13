@@ -74,3 +74,41 @@ session = DBSession()
 # session.commit()
 # print five.maximum_capacity
 
+def count_puppys_in_each_shelter():
+	first = session.query(Shelter).filter_by(id = 1).one()
+	one = session.query(Shelter,Puppy).filter(Shelter.id==Puppy.shelter_id).filter(Shelter.id==1).count()
+	print first.name,one
+	first.current_occupancy = one
+	session.add(first)
+	session.commit()
+
+	second = session.query(Shelter).filter_by(id = 2).one()
+	two = session.query(Shelter,Puppy).filter(Shelter.id==Puppy.shelter_id).filter(Shelter.id==2).count()
+	print second.name, two
+	second.current_occupancy = two
+	session.add(second)
+	session.commit()
+
+	third = session.query(Shelter).filter_by(id = 3).one()
+	three = session.query(Shelter,Puppy).filter(Shelter.id==Puppy.shelter_id).filter(Shelter.id==3).count()
+	print third.name, three
+	third.current_occupancy = three
+	session.add(third)
+	session.commit()
+
+	fourth = session.query(Shelter).filter_by(id = 4).one()
+	four = session.query(Shelter,Puppy).filter(Shelter.id==Puppy.shelter_id).filter(Shelter.id==4).count()
+	print fourth.name,four
+	fourth.current_occupancy = four
+	session.add(fourth)
+	session.commit()
+
+	fifth = session.query(Shelter).filter_by(id = 5).one()
+	five = session.query(Shelter,Puppy).filter(Shelter.id==Puppy.shelter_id).filter(Shelter.id==5).count()
+	print fifth.name,five
+	fifth.current_occupancy = five
+	session.add(fifth)
+	session.commit()
+
+count_puppys_in_each_shelter()
+# print count_puppys_in_each_shelter()
