@@ -5,7 +5,6 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
-
 class Shelter(Base):
 	__tablename__ = 'shelter'
 	id = Column(Integer, primary_key=True)
