@@ -1,5 +1,5 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
-
+import cgi
 
 class webserverHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
@@ -10,7 +10,11 @@ class webserverHandler(BaseHTTPRequestHandler):
 				self.end_headers()
 
 				output = ""
-				output += "<html><body>Hello!</body></html>"
+				output += "<html><body>Hello!"
+				output += "<form method='post' enctype='multipart/form-data' action='/hello'>\
+							<h2>What would youlike me to say?</h2><input name='message'\
+							type='text'><input type='submit' value='Submit'></form>\
+							</body></html>"
 				self.wfile.write(output)
 				print output
 				return
@@ -21,13 +25,45 @@ class webserverHandler(BaseHTTPRequestHandler):
 				self.end_headers()
 
 				output = ""
-				output += "<html><body>&#161Hola <a href='/hello'>Hello</a></body></html>"
+				output += "<html><body>&#161Hola <a href='/hello'>Hello</a>"
+				output += "<form method='post' enctype='multipart/form-data' action='/hello'>\
+							<h2>What would youlike me to say?</h2><input name='message'\
+							type='text'><input type='submit' value='Submit'></form>\
+							</body></html>"
 				self.wfile.write(output)
 				print output
 				return
 
 		except IOError:
 			self.send_error(404, "File Not Found %s" % self.path)
+
+	def do_POST(self):
+		try:
+			self.send_response(301)
+			self.send_header('Content-type', 'text/html')
+			self.end_headers()
+
+			ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
+			if ctype == 'mulitpart/form-data':
+				fields=cgi.parse_mulitpart(self.rfile, pdict)
+				messagecontent = fields.get('message')
+
+				output = ""
+				output += "<html><body>"
+				output += "<h2> OK, how about this: </h2>"
+				output += "</h1> %s </h1>" % messagecontent[0]
+				print messagecontent[0]
+
+				output += "<form method='POST' enctype='multipart/form-data' action='/hello'>\
+							<h2>What would youlike me to say</h2><input name='message'\
+							type='text'><input type='submit' value='Submit'></form>"
+
+				output += "</body></html>"
+				self.wfile.write(output)
+				print output
+
+		except:
+			pass
 
 def main():
 	try:
