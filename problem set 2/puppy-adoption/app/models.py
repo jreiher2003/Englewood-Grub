@@ -1,7 +1,7 @@
 from app import db 
  
 association_table = db.Table('association', 
-    db.Column('puppy_id', db.Integer, db.ForeignKey('puppy.id')),
+    db.Column('puppies', db.Integer, db.ForeignKey('puppy.id')),
     db.Column('adopters_id', db.Integer, db.ForeignKey('adopters.id'))
     )
 
@@ -38,7 +38,7 @@ class Puppy(db.Model):
     shelter = db.relationship(Shelter)
     weight = db.Column(db.Numeric(10))
     profile = db.relationship("Profile", uselist=False, back_populates="puppy")
-    adopters = db.relationship("Adpoters", secondary=association_table,back_populates="puppy")
+    adopters_id = db.relationship("Adpoters", secondary=association_table,back_populates="puppy")
 
     def __repr__(self):
         return '<name>: {}'.format(self.name)
