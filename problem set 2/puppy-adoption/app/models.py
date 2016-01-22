@@ -38,7 +38,7 @@ class Puppy(db.Model):
     shelter = db.relationship(Shelter)
     weight = db.Column(db.Numeric(10))
     profile = db.relationship("Profile", uselist=False, back_populates="puppy")
-    # adopters = relationship("Adpoters", secondary=association_table,back_populates="puppy")
+    adopters = db.relationship("Adpoters", secondary=association_table,back_populates="puppy")
 
     def __repr__(self):
         return '<name>: {}'.format(self.name)
@@ -65,7 +65,7 @@ class Adpoters(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250))
-    # puppies = relationship('Puppy', secondary=association_table,back_populates='adopters')
+    puppies = db.relationship('Puppy', secondary=association_table,back_populates='adopters')
 
     def __repr__(self):
         return '<name>: {}'.format(self.name)
