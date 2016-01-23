@@ -39,7 +39,7 @@ class Puppy(db.Model):
     shelter = db.relationship(Shelter)
     weight = db.Column(db.Numeric(10))
     profile = db.relationship("Profile", uselist=False, backref="puppy")
-    adopters = db.relationship("Adpoters", secondary=AssociationTable, backref="puppy")
+    adopters = db.relationship("Adopters", secondary=AssociationTable, backref="puppy")
 
     def __repr__(self):
         return '<name>: {}'.format(self.name)
@@ -60,7 +60,7 @@ class Profile(db.Model):
         return '<name>: {}'.format(self.name)
         
 
-class Adpoters(db.Model):
+class Adopters(db.Model):
 
     __tablename__ = "adopters"
 
