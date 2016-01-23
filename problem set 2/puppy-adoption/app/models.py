@@ -1,11 +1,5 @@
 from app import db 
  
-AssociationTable = db.Table('association',
-    db.Column('id', db.Integer, primary_key=True), 
-    db.Column('puppy_id', db.Integer, db.ForeignKey('puppy.id')),
-    db.Column('adopters_id', db.Integer, db.ForeignKey('adopters.id'))
-    )
-
 
 class Shelter(db.Model):
 
@@ -18,13 +12,12 @@ class Shelter(db.Model):
     state = db.Column(db.String(20))
     zipCode = db.Column(db.String(10))
     website = db.Column(db.String)
-    maximum_capacity = db.Column(db.Integer,nullable=True)
-    current_capacity = db.Column(db.Integer,nullable=True)
+    maximum_capacity = db.Column(db.Integer)
+    current_capacity = db.Column(db.Integer)
     
 
     def __repr__(self):
         return '<name>: {}'.format(self.name)
-
 
 class Puppy(db.Model):
 
@@ -39,7 +32,7 @@ class Puppy(db.Model):
     shelter = db.relationship(Shelter)
     weight = db.Column(db.Numeric(10))
     profile = db.relationship("Profile", uselist=False, back_populates="puppy")
-    adoption = db.relationship("Adopters", secondary=AssociationTable, back_populates="puppies")
+    # adoption = db.relationship("Adopters", secondary=AdoptorsPuppies, back_populates="puppies")
 
     def __repr__(self):
         return '<name>: {}'.format(self.name)
@@ -60,17 +53,29 @@ class Profile(db.Model):
         return '<name>: {}'.format(self.name)
         
 
-class Adopters(db.Model):
+class Adoptors(db.Model):
 
-    __tablename__ = "adopters"
+    __tablename__ = "adoptors"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250))
-    puppies = db.relationship("Puppy", secondary=AssociationTable, back_populates="adoption")
+    # puppies = db.relationship("Puppy", secondary=AdoptorsPuppies, back_populates="adoption")
 
     def __repr__(self):
         return '<name>: {}'.format(self.name)
 
 
+class AdoptorsPuppies(db.Model):
+    __tablename__ = 'adopters_puppies'
+
+    adoptor_id = db.Column(db.Integer,db.ForeignKey('adoptors.id'), primary_key = True)
+    puppy_id = db.Column(db.Integer,db.ForeignKey('puppy.id'), primary_key = True)
+    
+    puppies = db.relationship(Puppy)
+    adoptors = db.relationship(Adoptors)
+
+# def puppy_by_shelter(shel_id):
+#     """Counts puppies by shelter id """
+#     return Puppy.query.filter(db.and_(Puppy.shelter_id==Shelter.id, Shelter.id == shel_id)).count()
 
 

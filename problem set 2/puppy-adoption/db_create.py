@@ -1,5 +1,5 @@
 from app import db 
-from app.models import Shelter, Puppy, Profile, Adopters, AssociationTable
+from app.models import Shelter, Puppy, Profile, Adopters, AdoptorsPuppies
 
 from random import randint
 import datetime
@@ -55,16 +55,36 @@ import random
 # 	db.session.add(new_puppy)
 # 	db.session.commit()
 
-def puppy_by_shelter():
-	pupshelter = db.session.query(Shelter).all()
-	for pup in pupshelter:
-		print pup.name
+#######################################################################################
+############  Helpful queries  ########################################################
+#######################################################################################
+# Query all puppies in alphabetical order.
+def get_puppies_by_name():
+    return db.session.query(Puppy).order_by(Puppy.name).all()
 
-print puppy_by_shelter()
+# Query all puppies less than 6 months old and order by birthdate with youngest first. 
+def get_baby_puppies():
+    sixMonthsAgo = datetime.date.today() - datetime.timedelta(6 *365/12)
+    return db.session.query(Puppy).filter(Puppy.dateOfBirth > sixMonthsAgo).order_by(Puppy.dateOfBirth).all()
 
-# def count_pups_by_sheter():
-# 	pups = session.query(Shelter,Puppy).from_statement(text'''select r.name, count(a.id) as puppies from shelter r left outer join puppy a on r.id=a.shelter_id group by r.id''').all()
-# 	for pup in pups:
-# 		print pup
+# Query all puppies and order by ascending weight.
+def get_puppies_by_weight():
+    return db.session.query(Puppy).order_by(Puppy.weight).all()
 
-# print count_pups_by_sheter()
+# Query all puppies and group by shelter
+def get_puppies_by_shelter():
+	return db.session.query(Puppy, Shelter).join(Shelter).order_by(Puppy.shelter_id).all()
+
+# Query the current occupancy of a specific shelter. 
+def get_shelter_occupancy(shel_id):
+	# return Shelter.query.filter(db.and_(Puppy.shelter_id==Shelter.id, Shelter.id == shel_id)).count()
+	return db.session.query(Puppy, Shelter).join(Shelter).filter(Shelter.id == shel_id).count()
+
+# Query the capacity for a shelter by it's ID.
+def get_shelter_capacity(shel_id):
+	return db.session.query(Shelter.maximum_capacity).filter(Shelter.id == shel_id).all()
+	
+
+print get_puppies_by_shelter()
+
+
