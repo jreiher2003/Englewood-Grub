@@ -1,5 +1,5 @@
 from app import db 
-from app.models import Shelter, Puppy, Profile, Adpoters, association_table
+from app.models import Shelter, Puppy, Profile, Adopters, AssociationTable
 
 from random import randint
 import datetime
@@ -55,16 +55,16 @@ import random
 # 	db.session.add(new_puppy)
 # 	db.session.commit()
 
-# def puppy_by_shelter():
-# 	pupshelter = db.session.query(Shelter).all()
-# 	for pup in pupshelter:
-# 		print pup.name
+def puppy_by_shelter():
+	pupshelter = db.session.query(Shelter).all()
+	for pup in pupshelter:
+		print pup.name
 
-# print puppy_by_shelter()
+print puppy_by_shelter()
 
-def count_pups_by_sheter():
-	pups = session.query(Shelter,Puppy).from_statement(text'''select r.name, count(a.id) as puppies from shelter r left outer join puppy a on r.id=a.shelter_id group by r.id''').all()
-	for pup in pups:
-		print pup
+# def count_pups_by_sheter():
+# 	pups = session.query(Shelter,Puppy).from_statement(text'''select r.name, count(a.id) as puppies from shelter r left outer join puppy a on r.id=a.shelter_id group by r.id''').all()
+# 	for pup in pups:
+# 		print pup
 
-print count_pups_by_sheter()
+# print count_pups_by_sheter()
