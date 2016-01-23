@@ -1,0 +1,8 @@
+select r.name, count(a.id) as puppies from shelter r left outer join puppy a on r.id=a.shelter_id group by r.id;
+
+
+psudo=
+define a function which counts puppys by shelter.id and inserts that number into current capacity.  also updates column 
+for each puppy that is added later.
+
+select count(*) from puppy join shelter on puppy.shelter_id=shelter.id where shelter.id = 1;
