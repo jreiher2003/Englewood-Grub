@@ -74,8 +74,5 @@ class AdoptorsPuppies(db.Model):
     puppies = db.relationship(Puppy)
     adoptors = db.relationship(Adoptors)
 
-# def puppy_by_shelter(shel_id):
-#     """Counts puppies by shelter id """
-#     return Puppy.query.filter(db.and_(Puppy.shelter_id==Shelter.id, Shelter.id == shel_id)).count()
 
 

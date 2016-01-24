@@ -4,7 +4,20 @@
 
 <h1>Hello, world!</h1>
 
+<!-- <img src="https://pixabay.com/static/uploads/photo/2015/11/17/13/13/bulldog-1047518_960_720.jpg", width="200"> -->
 {% for pup in puppy %}
+<h4>Puppy table</h4>
 <a href="{{ pup.picture }}">{{ pup.name }}</a><br>
+{{ pup.gender }}<br>
+{{ pup.dateOfBirth }}<br>
+{{ pup.weight }}<br>
+<h4>Profile table</h4>
+{{ pup.profile.id }}<br>
+{{ pup.profile.photo }}<br>
+{{ pup.profile.specialNeeds }}
+<h4>Shelter Table</h4>
+{{ pup.shelter.name }}
+
+<br><br><br>
 {% endfor %}
 {% endblock %}
