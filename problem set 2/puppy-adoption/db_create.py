@@ -1,5 +1,5 @@
 from app import db 
-from app.models import Shelter, Puppy, Profile, Adopters, AdoptorsPuppies
+from app.models import Shelter, Puppy, Profile, Adoptors, AdoptorsPuppies
 
 from random import randint
 import datetime
@@ -9,19 +9,19 @@ import random
 
 
 # # Add Shelters
-# shelter1 = Shelter(name = "Oakland Animal Services", address = "1101 29th Ave", city = "Oakland", state = "California", zipCode = "94601", website = "oaklandanimalservices.org")
+# shelter1 = Shelter(name = "Oakland Animal Services", address = "1101 29th Ave", city = "Oakland", state = "California", zipCode = "94601", website = "oaklandanimalservices.org", maximum_capacity=40)
 # db.session.add(shelter1)
 
-# shelter2 = Shelter(name = "San Francisco SPCA Mission Adoption Center", address="250 Florida St", city="San Francisco", state="California", zipCode = "94103", website = "sfspca.org")
+# shelter2 = Shelter(name = "San Francisco SPCA Mission Adoption Center", address="250 Florida St", city="San Francisco", state="California", zipCode = "94103", website = "sfspca.org", maximum_capacity=40)
 # db.session.add(shelter2)
 
-# shelter3 = Shelter(name = "Wonder Dog Rescue", address= "2926 16th Street", city = "San Francisco", state = "California" , zipCode = "94103", website = "http://wonderdogrescue.org")
+# shelter3 = Shelter(name = "Wonder Dog Rescue", address= "2926 16th Street", city = "San Francisco", state = "California" , zipCode = "94103", website = "http://wonderdogrescue.org", maximum_capacity=40)
 # db.session.add(shelter3)
 
-# shelter4 = Shelter(name = "Humane Society of Alameda", address = "PO Box 1571" ,city = "Alameda" ,state = "California", zipCode = "94501", website = "hsalameda.org")
+# shelter4 = Shelter(name = "Humane Society of Alameda", address = "PO Box 1571" ,city = "Alameda" ,state = "California", zipCode = "94501", website = "hsalameda.org", maximum_capacity=40)
 # db.session.add(shelter4)
 
-# shelter5 = Shelter(name = "Palo Alto Humane Society" ,address = "1149 Chestnut St." ,city = "Menlo Park", state = "California" ,zipCode = "94025", website = "paloaltohumane.org")
+# shelter5 = Shelter(name = "Palo Alto Humane Society" ,address = "1149 Chestnut St." ,city = "Menlo Park", state = "California" ,zipCode = "94025", website = "paloaltohumane.org", maximum_capacity=40)
 # db.session.add(shelter5)
 
 # # db.session.commit()
@@ -85,6 +85,33 @@ def get_shelter_capacity(shel_id):
 	return db.session.query(Shelter.maximum_capacity).filter(Shelter.id == shel_id).all()
 	
 
-print get_puppies_by_shelter()
+# A Query that determines which Shelter to place a puppy in.
+def add_puppy_to_shelter(puppy_id, shelter_id):
+	if (get_shelter_occupancy(shelter_id) >= get_shelter_capacity(shelter_id)):
+		sheltered_puppy = session.query(Puppy).filter(Puppy.id == puppy_id).one()
+		sheltered_puppy.shelter_id = shelter_id
+		session.add(sheltered_puppy)
+		session.commit()
+		print "Puppy added to shelter."
+		return None
+	unsheletered_puppy = session.query(Puppy).filter(Puppy.id == puppy_id).one()
+	print '%s has been put to sleep. There was no room in the shelter.' % unsheletered_puppy.name
+	session.delete(unsheletered_puppy)
+	session.commit()
+	return None
+
+
+# A Query that removes a puppy from it's Shelter and adds it to a home.
+def adopt_puppies(puppy_id, adopter_list):
+	adopted_puppy = session.query(Puppy).filter(Puppy.id == puppy_id).one()
+	adopted_puppy.shelter_id = None
+	session.add(adopted_puppy)
+	
+	for adopter in adopter_list:
+		new_adoption = AdoptorsPuppies(adoptor_id = adopter, puppy_id = adopted_puppy.id)
+		session.add(new_adoption)
+	session.commit()
+	
+	return None
 
 
