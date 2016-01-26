@@ -6,7 +6,7 @@
 
 	
 	{% for pup in puppy %}
-	{{ pup.name }}<br>
+	{{ pup.name }}<a href="{{ url_for('puppy_profile', shelter_id=pup.shelter.id,shelter_name=pup.shelter.name_slug, puppy_id=pup.id) }}">profile</a><br>
 	{% endfor %}
 	
 {% endblock %}
