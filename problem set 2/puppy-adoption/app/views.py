@@ -13,9 +13,12 @@ def index():
 	shelter = db.session.query(Shelter).all()
 	return render_template('index.html', shelter=shelter)
 
-@app.route('/<path:shelter_name>')
-def shelter_profile(shelter_name):
-	return "shelter profile page"
+@app.route('/<int:shelter_id>/<path:shelter_name>')
+def shelter_profile(shelter_id,shelter_name):
+	shelter_profile = db.session.query(Shelter).filter_by(id=shelter_id).one()
+	puppy = db.session.query(Puppy).filter_by(shelter_id=shelter_id).all()
+	return render_template('shelter_profile.html', shelter_profile=shelter_profile, puppy=puppy)
+	
 ## CRUD operations Puppy, Shelter Adoptors ##
 #############################################
 
