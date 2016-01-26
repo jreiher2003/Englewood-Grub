@@ -2,6 +2,11 @@
 
 {% block content %}
 
-{{ puppy.name }}
+This is {{ puppy.name }}<br>
+<img src="{{ puppy.picture }}"/><br>
+{{ puppy.dateOfBirth }}<br>
+{{ puppy.weight }}lbs<br>
+{{ puppy.profile.description }}<br>
+{{ puppy.profile.specialNeeds }}<br>
 
 {% endblock %}
