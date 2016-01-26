@@ -1,4 +1,6 @@
 from app import db 
+
+from slugify import slugify
  
 
 class Shelter(db.Model):
@@ -15,9 +17,13 @@ class Shelter(db.Model):
     maximum_capacity = db.Column(db.Integer)
     current_capacity = db.Column(db.Integer)
     
-
     def __repr__(self):
         return '<name>: {}'.format(self.name)
+
+    @property 
+    def name_slug(self):
+        return slugify(self.name)
+
 
 class Puppy(db.Model):
 
