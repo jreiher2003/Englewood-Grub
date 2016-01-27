@@ -2,6 +2,7 @@ from app import app, db
 from random import randint
 import datetime
 import random
+from werkzeug import secure_filename
 from flask import render_template, url_for, flash, redirect
 from forms import CreatePuppy
 from app.models import Shelter, Puppy, Profile
