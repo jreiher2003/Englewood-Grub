@@ -1,6 +1,8 @@
 from random import randint
 import datetime
 import random
+from app import app, db
+from app.models import Shelter, Puppy, Profile
 
 puppy_images = ["https://pixabay.com/static/uploads/photo/2015/11/17/13/13/bulldog-1047518_960_720.jpg", "https://pixabay.com/static/uploads/photo/2015/03/26/09/54/pug-690566__180.jpg","https://pixabay.com/static/uploads/photo/2014/03/05/19/23/dog-280332__180.jpg","https://pixabay.com/static/uploads/photo/2015/02/05/12/09/chihuahua-624924__180.jpg","https://pixabay.com/static/uploads/photo/2016/01/05/17/57/dog-1123026__180.jpg","https://pixabay.com/static/uploads/photo/2014/03/14/20/07/painting-287403__180.jpg","https://pixabay.com/static/uploads/photo/2016/01/05/17/51/dog-1123016__180.jpg","https://pixabay.com/static/uploads/photo/2014/07/05/08/50/puppy-384647__180.jpg","https://pixabay.com/static/uploads/photo/2015/12/23/14/29/puppies-1105730__180.jpg","https://pixabay.com/static/uploads/photo/2015/11/17/12/42/puppy-1047454__180.jpg"]
 
@@ -44,14 +46,16 @@ def get_shelter_occupancy(shel_id):
 
 # Query the capacity for a shelter by it's ID.
 def get_shelter_capacity(shel_id):
-	return db.session.query(Shelter.maximum_capacity).filter(Shelter.id == shel_id).all()
+	return db.session.query(Shelter.maximum_capacity).filter(Shelter.id == shel_id).one()[0]
 
 
 # A Query that determines which Shelter to place a puppy in.
 def add_puppy_to_shelter():
-	shelter_id = randint(1,5)
-	if (get_shelter_occupancy(shelter_id) >= get_shelter_capacity(shelter_id)):
-		return shelter_id
-	else:
-		shelter_id = shelter_id + 1
-		return shelter_id
+	arr = [1,2,3,4,5]
+	while len(arr) > 0:
+		shelter_id = random.choice(arr)
+		if (get_shelter_occupancy(shelter_id) < get_shelter_capacity(shelter_id)):
+			return shelter_id
+		else:
+			arr.remove(shelter_id)
+			

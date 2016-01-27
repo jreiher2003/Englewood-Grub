@@ -58,29 +58,7 @@ for i,x in enumerate(female_names):
 	db.session.add(new_puppy)
 	db.session.commit()
 
-# sp_needs = ['blind', 'deaf', '3 legged']
-# def special_needs():
-# 	return random.choice(sp_needs)
 
-# def populate_special_needs():
-# 	""" function to populate special needs of the profile table """
-# 	puppy = db.session.query(Puppy).all()
-# 	puppy = puppy[::5]
-# 	for pup in puppy:
-# 		sp = Profile(specialNeeds=special_needs(), puppy_id= pup.id)
-# 		db.session.add(sp)
-# 		db.session.commit()
-# 	print "update"
-# populate_special_needs()
-def populate_profile():
-	""" function to populate description column of Profile table """
-	puppy = db.session.query(Puppy).all()
-	for pup in puppy:
-		new_profile = Profile(description=descriptions(), specialNeeds=special_needs(), puppy_id=pup.id)
-		db.session.add(new_profile)
-		db.session.commit()
-	print "profile update"
-populate_profile()
 #######################################################################################
 ############  Helpful queries  ########################################################
 #######################################################################################
@@ -108,13 +86,12 @@ def get_shelter_occupancy(shel_id):
 
 # Query the capacity for a shelter by it's ID.
 def get_shelter_capacity(shel_id):
-	return db.session.query(Shelter.maximum_capacity).filter(Shelter.id == shel_id).all()
-	
+	return db.session.query(Shelter.maximum_capacity).filter(Shelter.id == shel_id).one()[0]
 
 # A Query that determines which Shelter to place a puppy in.
 def add_puppy_to_shelter(puppy_id, shelter_id):
 	shelter_id = randint(1,5)
-	if (get_shelter_occupancy(shelter_id) >= get_shelter_capacity(shelter_id)):
+	if (get_shelter_occupancy(shelter_id) <= get_shelter_capacity(shelter_id)):
 		sheltered_puppy = session.query(Puppy).filter(Puppy.id == puppy_id).one()
 		sheltered_puppy.shelter_id = shelter_id
 		session.add(sheltered_puppy)
@@ -142,6 +119,17 @@ def adopt_puppies(puppy_id, adopter_list):
 	return None
 
 
+def populate_profile():
+	""" function to populate description column of Profile table """
+	puppy = db.session.query(Puppy).all()
+	for pup in puppy:
+		new_profile = Profile(description=descriptions(), specialNeeds=special_needs(), puppy_id=pup.id)
+		db.session.add(new_profile)
+		db.session.commit()
+	print "profile update"
+populate_profile()
+
+
 ### update shelter to add the current capacity
 def count_pups():
 	shelter = db.session.query(Shelter).all()
@@ -151,3 +139,15 @@ def count_pups():
 		db.session.commit()
 
 count_pups()
+
+def add_puppy_to_shelter():
+	arr = [1,2,3,4,5]
+	while len(arr) > 0:
+		shelter_id = random.choice(arr)
+		if (get_shelter_occupancy(shelter_id) < get_shelter_capacity(shelter_id)):
+			return shelter_id
+		else:
+			arr.remove(shelter_id)
+	
+
+# print add_puppy_to_shelter()

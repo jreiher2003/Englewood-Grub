@@ -38,37 +38,17 @@ def puppy_profile(shelter_id,shelter_name,puppy_id):
 ## CRUD operations Puppy, Shelter Adoptors ##
 #############################################
 # Query the current occupancy of a specific shelter. 
-def get_shelter_occupancy(shel_id):
-	# return Shelter.query.filter(db.and_(Puppy.shelter_id==Shelter.id, Shelter.id == shel_id)).count()
-	return db.session.query(Puppy, Shelter).join(Shelter).filter(Shelter.id == shel_id).count()
 
-# Query the capacity for a shelter by it's ID.
-def get_shelter_capacity(shel_id):
-	return db.session.query(Shelter.maximum_capacity).filter(Shelter.id == shel_id).all()
-
-
-# A Query that determines which Shelter to place a puppy in.
-def add_puppy_to_shelter():
-	shelter_id = randint(1,5)
-	if (get_shelter_occupancy(shelter_id) >= get_shelter_capacity(shelter_id)):
-		return shelter_id
-	else:
-		shelter_id = shelter_id + 1
-		return shelter_id
 
 ## create a new puppy ########################
 @app.route('/new-puppy', methods=['GET', 'POST'])
 def new_puppy():
 	form = CreatePuppy()
 	if form.validate_on_submit():
-		newpuppy = Puppy(name=form.name.data,gender=form.gender.data,dateOfBirth=create_random_age(),picture="",shelter_id=add_puppy_to_shelter(),weight=create_random_weight())
-		# newprofile = db.session.query(Profile).one()
-		# newprofile.description = descriptions()
-		# newprofile.specialNeeds = form.specialNeeds.data 
+		newpuppy = Puppy(name=form.name.data, gender=form.gender.data, dateOfBirth=create_random_age(), picture=form.picture.data, shelter_id=add_puppy_to_shelter(), weight=create_random_weight())
 		currentcapacity = db.session.query(Shelter).filter(Shelter.id==newpuppy.shelter_id).one()
 		currentcapacity.current_capacity = currentcapacity.current_capacity + 1
 		db.session.add(newpuppy)
-		# db.session.add(newprofile)
 		db.session.add(currentcapacity)
 		db.session.commit()
 		flash('Successfully Added a Puppy to '+ currentcapacity.name, 'success')
