@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h1>Create a new puppy</h1>
+
+<form id="multiselectForm" method="post" class="form-horizontal"action="">
+	{{ form.csrf_token }}
+	{{ form.name.label }}{{ form.name }}<br>
+	{{ form.gender.label }}{{ form.gender }}
+	<input type="submit" value="create">
+</fomr>
+
+<br><br><br>
+
+
+{% endblock %}

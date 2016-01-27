@@ -113,6 +113,7 @@ def get_shelter_capacity(shel_id):
 
 # A Query that determines which Shelter to place a puppy in.
 def add_puppy_to_shelter(puppy_id, shelter_id):
+	shelter_id = randint(1,5)
 	if (get_shelter_occupancy(shelter_id) >= get_shelter_capacity(shelter_id)):
 		sheltered_puppy = session.query(Puppy).filter(Puppy.id == puppy_id).one()
 		sheltered_puppy.shelter_id = shelter_id
