@@ -5,11 +5,15 @@
 	<h1>{{ shelter_profile.name }}</h1>
 
 	
-	{% for pup in puppy %}
+	{% for pup in puppy.items %}
 	{{ pup.name }}<a href="{{ url_for('puppy_profile', shelter_id=pup.shelter.id,shelter_name=pup.shelter.name_slug, puppy_id=pup.id) }}">profile</a><br>
 	{% endfor %}
 
 
+{% if puppy.has_prev %}<li><a href="{{ url_for('shelter_profile', shelter_id=shelter_id,
+							shelter_name=shelter_name, page=puppy.prev_num) }}">Previous</a></li>{% else %}<li>Previous</li>{% endif %} 
 
+{% if puppy.has_next %}<li><a href="{{ url_for('shelter_profile', shelter_id=shelter_id,
+							shelter_name=shelter_name, page=puppy.next_num) }}">Next</a></li>{% else %}<li>Next</li>{% endif %} 
 
 {% endblock %}

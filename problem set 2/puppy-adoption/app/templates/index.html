@@ -5,7 +5,7 @@
 <h1>Puppy Adoption Website</h1>
 
 {% for shel in shelter %}
-<a href="{{ url_for('shelter_profile', shelter_id=shel.id,shelter_name=shel.name_slug) }}">Link to shelter page</a><br>
+<a href="{{ url_for('shelter_profile', shelter_id=shel.id,shelter_name=shel.name_slug, page=1) }}">Link to shelter page</a><br>
 	{{ shel.name }}<br>
 	{{ shel.city }}, {{ shel.state }} {{ shel.zipCode }}<br>
 	<a href="{{ shel.website }}">{{ shel.website }}</a><br><br>

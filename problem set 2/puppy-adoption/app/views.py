@@ -13,11 +13,10 @@ def index():
 	shelter = db.session.query(Shelter).all()
 	return render_template('index.html', shelter=shelter)
 
-@app.route('/<int:shelter_id>/<path:shelter_name>')
-def shelter_profile(shelter_id,shelter_name):
+@app.route('/<int:shelter_id>/<path:shelter_name>/page/<int:page>')
+def shelter_profile(shelter_id,shelter_name, page=1):
 	shelter_profile = db.session.query(Shelter).filter_by(id=shelter_id).one()
-	puppy = db.session.query(Puppy).filter_by(shelter_id=shelter_id).all()
-	# puppy = Puppy.query.paginate(page,5,False)
+	puppy = Puppy.query.filter(Puppy.shelter_id==shelter_id).paginate(page,5,False)
 	return render_template('shelter_profile.html', 
 							shelter_id=shelter_id,
 							shelter_name=shelter_name,
@@ -25,7 +24,7 @@ def shelter_profile(shelter_id,shelter_name):
 						    puppy=puppy)
 
 
-@app.route('/<int:shelter_id>/<path:shelter_name>/<int:puppy_id>')
+@app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>')
 def puppy_profile(shelter_id,shelter_name,puppy_id):
 	puppy = db.session.query(Puppy).filter_by(id=puppy_id).one()
 	return render_template('puppy_profile.html', puppy=puppy)
