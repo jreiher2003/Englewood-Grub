@@ -5,7 +5,7 @@ import random
 from flask import render_template, url_for, flash, redirect
 from forms import CreatePuppy
 from app.models import Shelter, Puppy, Profile
-from app.utils import create_random_weight, create_random_age
+from app.utils import *
 
 ## front page with  ordered by shelter, place to create adoptor. 
 ## shelter page display puppyies with pagination
@@ -61,12 +61,16 @@ def new_puppy():
 	form = CreatePuppy()
 	if form.validate_on_submit():
 		newpuppy = Puppy(name=form.name.data,gender=form.gender.data,dateOfBirth=create_random_age(),picture="",shelter_id=add_puppy_to_shelter(),weight=create_random_weight())
+		# newprofile = db.session.query(Profile).one()
+		# newprofile.description = descriptions()
+		# newprofile.specialNeeds = form.specialNeeds.data 
 		currentcapacity = db.session.query(Shelter).filter(Shelter.id==newpuppy.shelter_id).one()
 		currentcapacity.current_capacity = currentcapacity.current_capacity + 1
 		db.session.add(newpuppy)
+		# db.session.add(newprofile)
 		db.session.add(currentcapacity)
 		db.session.commit()
-		flash('Successfully Added a Puppy to '+currentcapacity.name, 'success')
+		flash('Successfully Added a Puppy to '+ currentcapacity.name, 'success')
 		return redirect(url_for('index'))
 
 	return render_template('new_puppy.html', form=form)

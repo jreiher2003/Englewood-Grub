@@ -8,7 +8,8 @@
 <form id="multiselectForm" method="post" class="form-horizontal"action="">
 	{{ form.csrf_token }}
 	{{ form.name.label }}{{ form.name }}<br>
-	{{ form.gender.label }}{{ form.gender }}
+	{{ form.gender.label }}{{ form.gender }}<br>
+	{#{{ form.specialNeeds.label }}{{ form.specialNeeds }}#}
 	<input type="submit" value="create">
 </fomr>
 
