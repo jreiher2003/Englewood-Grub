@@ -4,12 +4,12 @@
 
 This is {{ puppy.name }}<br>
 <img src="{{ puppy.picture }}"/><br>
+{{ puppy.shelter.name }}<br>
 {{ puppy.dateOfBirth }}<br>
 {{ puppy.weight }}lbs<br>
 {{ puppy.profile.description }}<br>
 {{ puppy.profile.specialNeeds }}<br>
-{{ puppy.shelter.id }}<br>
-{{ puppy.profile.specialNeeds }}
+
 <hr>
 <a href="{{ url_for('edit_puppy', shelter_id=puppy.shelter.id,shelter_name=puppy.shelter.name_slug, puppy_id=puppy.id )}}">Edit</a>&nbsp;|&nbsp;<a href="{{ url_for('delete_puppy', shelter_id=puppy.shelter.id,shelter_name=puppy.shelter.name_slug, puppy_id=puppy.id )}}">Delete<a>
 

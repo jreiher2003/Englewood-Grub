@@ -77,7 +77,7 @@ def edit_puppy(shelter_id,shelter_name,puppy_id):
 		editpuppy.profile.specialNeeds = form.specialNeeds.data
 		db.session.add(editpuppy)
 		db.session.commit()
-		flash('Puppy was successfully edited', 'success')
+		flash('%s was successfully edited' % editpuppy.name, 'success')
 		return redirect(url_for('index'))
 	return render_template("edit_puppy_profile.html", editpuppy=editpuppy, form=form)
 
@@ -87,6 +87,10 @@ def delete_puppy(shelter_id, shelter_name, puppy_id):
 	deletepuppy = db.session.query(Puppy).join(Profile, Puppy.id==Profile.puppy_id).filter(Puppy.id==puppy_id).one()
 	if request.method == 'POST':
 		db.session.delete(deletepuppy)
+		db.session.commit()
+		currentcapacity = db.session.query(Shelter).filter(Shelter.id==deletepuppy.shelter_id).one()
+		currentcapacity.current_capacity = currentcapacity.current_capacity - 1
+		db.session.add(currentcapacity)
 		db.session.commit()
 		flash('Puppy %s Deleted' % deletepuppy.name)
 		return redirect(url_for('index'))

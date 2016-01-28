@@ -10,19 +10,19 @@ import random
 
 
 # # Add Shelters
-# shelter1 = Shelter(name = "Oakland Animal Services", address = "1101 29th Ave", city = "Oakland", state = "California", zipCode = "94601", website = "oaklandanimalservices.org", maximum_capacity=randint(25,40))
+# shelter1 = Shelter(name = "Oakland Animal Services", address = "1101 29th Ave", city = "Oakland", state = "California", zipCode = "94601", website = "oaklandanimalservices.org", maximum_capacity=randint(25,28))
 # db.session.add(shelter1)
 
-# shelter2 = Shelter(name = "San Francisco SPCA Mission Adoption Center", address="250 Florida St", city="San Francisco", state="California", zipCode = "94103", website = "sfspca.org", maximum_capacity=randint(25,40))
+# shelter2 = Shelter(name = "San Francisco SPCA Mission Adoption Center", address="250 Florida St", city="San Francisco", state="California", zipCode = "94103", website = "sfspca.org", maximum_capacity=randint(25,28))
 # db.session.add(shelter2)
 
-# shelter3 = Shelter(name = "Wonder Dog Rescue", address= "2926 16th Street", city = "San Francisco", state = "California" , zipCode = "94103", website = "http://wonderdogrescue.org", maximum_capacity=randint(25,40))
+# shelter3 = Shelter(name = "Wonder Dog Rescue", address= "2926 16th Street", city = "San Francisco", state = "California" , zipCode = "94103", website = "http://wonderdogrescue.org", maximum_capacity=randint(25,28))
 # db.session.add(shelter3)
 
-# shelter4 = Shelter(name = "Humane Society of Alameda", address = "PO Box 1571" ,city = "Alameda" ,state = "California", zipCode = "94501", website = "hsalameda.org", maximum_capacity=randint(25,40))
+# shelter4 = Shelter(name = "Humane Society of Alameda", address = "PO Box 1571" ,city = "Alameda" ,state = "California", zipCode = "94501", website = "hsalameda.org", maximum_capacity=randint(25,28))
 # db.session.add(shelter4)
 
-# shelter5 = Shelter(name = "Palo Alto Humane Society" ,address = "1149 Chestnut St." ,city = "Menlo Park", state = "California" ,zipCode = "94025", website = "paloaltohumane.org", maximum_capacity=randint(25,40))
+# shelter5 = Shelter(name = "Palo Alto Humane Society" ,address = "1149 Chestnut St." ,city = "Menlo Park", state = "California" ,zipCode = "94025", website = "paloaltohumane.org", maximum_capacity=randint(25,28))
 # db.session.add(shelter5)
 
 # db.session.commit()
@@ -84,10 +84,12 @@ def get_shelter_occupancy(shel_id):
 	# return Shelter.query.filter(db.and_(Puppy.shelter_id==Shelter.id, Shelter.id == shel_id)).count()
 	return db.session.query(Puppy, Shelter).join(Shelter).filter(Shelter.id == shel_id).count()
 
+print get_shelter_occupancy(1)
 # Query the capacity for a shelter by it's ID.
 def get_shelter_capacity(shel_id):
 	return db.session.query(Shelter.maximum_capacity).filter(Shelter.id == shel_id).one()[0]
 
+print get_shelter_capacity(1)
 # A Query that determines which Shelter to place a puppy in.
 def add_puppy_to_shelter(puppy_id, shelter_id):
 	shelter_id = randint(1,5)
@@ -150,7 +152,7 @@ def add_puppy_to_shelter():
 			arr.remove(shelter_id)
 	
 
-# print add_puppy_to_shelter()
+print add_puppy_to_shelter()
 
 
 def profile_puppy_one():
@@ -162,4 +164,4 @@ def profile_puppy_one():
 	
 	
 
-print profile_puppy_one()
+# print profile_puppy_one()
