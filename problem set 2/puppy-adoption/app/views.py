@@ -3,7 +3,7 @@ from random import randint
 import datetime
 import random
 from werkzeug import secure_filename
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, request
 from forms import CreatePuppy
 from app.models import Shelter, Puppy, Profile
 from app.utils import *
@@ -84,7 +84,13 @@ def edit_puppy(shelter_id,shelter_name,puppy_id):
 
 @app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>/delete/', methods=['GET','POST'])
 def delete_puppy(shelter_id, shelter_name, puppy_id):
-	return 'delete'
+	deletepuppy = db.session.query(Puppy).join(Profile, Puppy.id==Profile.puppy_id).filter(Puppy.id==puppy_id).one()
+	if request.method == 'POST':
+		db.session.delete(deletepuppy)
+		db.session.commit()
+		flash('Puppy %s Deleted' % deletepuppy.name)
+		return redirect(url_for('index'))
+	return render_template('delete_puppy_profile.html', deletepuppy=deletepuppy)
 
 	
 # create a new shelter ######################
