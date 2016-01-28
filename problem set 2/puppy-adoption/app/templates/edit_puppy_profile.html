@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	
+
+		Edit puppy named {{ puppy.name }}<br>
+		{{ puppy.weight }}<br>
+		{{ puppy.gender }}<br>
+		{{ puppy.picture }}<br>
+		
+		{{ puppy.profile.description }}<br>
+		{{ puppy.profile.specialNeeds }}
+
+
+{% endblock %}

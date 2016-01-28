@@ -55,7 +55,12 @@ def new_puppy():
 		return redirect(url_for('index'))
 
 	return render_template('new_puppy.html', form=form)
-## create a new shelter ######################
-## create a new adoptor ######################
+
+@app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>/edit/')
+def edit_puppy(shelter_id,shelter_name,puppy_id):
+	puppy = db.session.query(Puppy).filter_by(id=puppy_id).one()
+	return render_template("edit_puppy_profile.html", puppy=puppy)
+# create a new shelter ######################
+# create a new adoptor ######################
 
 
