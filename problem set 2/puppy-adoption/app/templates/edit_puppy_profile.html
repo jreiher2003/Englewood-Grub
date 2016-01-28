@@ -3,13 +3,27 @@
 {% block content %}
 	
 
-		Edit puppy named {{ puppy.name }}<br>
-		{{ puppy.weight }}<br>
-		{{ puppy.gender }}<br>
-		{{ puppy.picture }}<br>
+		Edit puppy named {{ editpuppy.name }}<br>
+		{{ editpuppy.weight }}<br>
+		{{ editpuppy.gender }}<br>
+		{{ editpuppy.picture }}<br>
 		
-		{{ puppy.profile.description }}<br>
-		{{ puppy.profile.specialNeeds }}
+		{{ editpuppy.profile.description }}<br>
+		{{ editpuppy.profile.specialNeeds }}
+
+
+
+<h1>Edit a puppy</h1>
+
+<form method="post" class="form-horizontal" action="">
+	{{ form.csrf_token }}
+	{{ form.name.label }}{{ form.name }}<br>
+	{{ form.gender.label }}{{ form.gender }}<br>
+	{{ form.picture.label }}{{ form.picture(placeholder="https://pixabay.com/") }}<br>
+	{{ form.specialNeeds.label }}{{ form.specialNeeds }}<br>
+	
+	<input type="submit" value="Edit">
+</fomr>
 
 
 {% endblock %}
