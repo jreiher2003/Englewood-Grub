@@ -61,7 +61,7 @@ def new_puppy():
 		flash('Successfully Added a Puppy to '+ currentcapacity.name, 'success')
 		return redirect(url_for('index'))
 
-	return render_template('new_puppy.html', form=form)
+	return render_template('create_puppy.html', form=form)
 
 
 @app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>/edit/', methods=['GET','POST'])
