@@ -56,7 +56,7 @@ class Profile(db.Model):
     puppy = db.relationship("Puppy", back_populates="profile")
 
     def __repr__(self):
-        return '<name>: {}'.format(self.name)
+        return '<specialNeeds>: {}'.format(self.specialNeeds)
         
 
 class Adoptors(db.Model):
