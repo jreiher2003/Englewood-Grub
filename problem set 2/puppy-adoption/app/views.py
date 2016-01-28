@@ -71,6 +71,7 @@ def edit_puppy(shelter_id,shelter_name,puppy_id):
 		editpuppy.name = form.name.data
 		editpuppy.gender = form.gender.data
 		editpuppy.picture = form.picture.data
+		editpuppy.weight = form.weight.data
 		editpuppy.profile.specialNeeds = form.specialNeeds.data
 		db.session.add(editpuppy)
 		db.session.commit()
