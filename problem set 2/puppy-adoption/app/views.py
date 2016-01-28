@@ -8,6 +8,7 @@ from forms import CreatePuppy
 from app.models import Shelter, Puppy, Profile
 from app.utils import *
 
+
 ## front page with  ordered by shelter, place to create adoptor. 
 ## shelter page display puppyies with pagination
 ## click on a puppy to see profile of puppy
@@ -18,6 +19,7 @@ def index():
 	""" front page of site that lists all shelters"""
 	shelter = db.session.query(Shelter).order_by("current_capacity asc").all()
 	return render_template('index.html', shelter=shelter)
+
 
 @app.route('/<int:shelter_id>/<path:shelter_name>/page/<int:page>')
 def shelter_profile(shelter_id,shelter_name, page=1):
@@ -34,6 +36,7 @@ def shelter_profile(shelter_id,shelter_name, page=1):
 def puppy_profile(shelter_id,shelter_name,puppy_id):
 	puppy = db.session.query(Puppy).filter_by(id=puppy_id).one()
 	return render_template('puppy_profile.html', puppy=puppy)
+
 
 ## CRUD operations Puppy, Shelter Adoptors ##
 #############################################
@@ -64,7 +67,6 @@ def new_puppy():
 @app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>/edit/', methods=['GET','POST'])
 def edit_puppy(shelter_id,shelter_name,puppy_id):
 	# editpuppy = db.session.query(Puppy).filter_by(id=puppy_id).one()
-	# edit_pro = db.session.query(Profile).filter_by(puppy_id=puppy_id).one()
 	editpuppy=db.session.query(Puppy).join(Profile, Puppy.id==Profile.puppy_id).filter(Puppy.id==puppy_id).one()
 	form = CreatePuppy(obj=editpuppy)
 	if form.validate_on_submit():
@@ -79,9 +81,12 @@ def edit_puppy(shelter_id,shelter_name,puppy_id):
 		return redirect(url_for('index'))
 	return render_template("edit_puppy_profile.html", editpuppy=editpuppy, form=form)
 
+
 @app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>/delete/', methods=['GET','POST'])
 def delete_puppy(shelter_id, shelter_name, puppy_id):
 	return 'delete'
+
+	
 # create a new shelter ######################
 # create a new adoptor ######################
 

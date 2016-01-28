@@ -1,17 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	
-
-		Edit puppy named {{ editpuppy.name }}<br>
-		{{ editpuppy.weight }}<br>
-		{{ editpuppy.gender }}<br>
-		{{ editpuppy.picture }}<br>
-		
-		{{ editpuppy.profile.description }}<br>
-		{{ editpuppy.profile.specialNeeds }}
-
-
 
 <h1>Edit a puppy</h1>
 
@@ -24,7 +13,7 @@
 	{{ form.specialNeeds.label }}{{ form.specialNeeds }}<br>
 	
 	<input type="submit" value="Edit">
-</fomr>
+</form>
 
 
 {% endblock %}
