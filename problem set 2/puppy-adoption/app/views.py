@@ -4,8 +4,8 @@ import datetime
 import random
 from werkzeug import secure_filename
 from flask import render_template, url_for, flash, redirect, request
-from forms import CreatePuppy, CreateShelter
-from app.models import Shelter, Puppy, Profile
+from forms import CreatePuppy, CreateShelter, CreateAdoptor
+from app.models import Shelter, Puppy, Profile, Adoptors
 from app.utils import *
 
 
@@ -55,7 +55,28 @@ def new_shelter():
 							form=form, 
 							error=error)
 
-@app.route('/<int:shelter_id>/<path:shelter_name>', methods=['GET', 'POST'])
+@app.route('/<int:shelter_id>/<path:shelter_name>/edit/', methods=['GET','POST'])
+def edit_shelter(shelter_id,shelter_name):
+	editshelter = db.session.query(Shelter).filter_by(id=shelter_id).one()
+	form = CreateShelter(obj=editshelter)
+	if form.validate_on_submit():
+		editshelter.name = form.name.data
+		editshelter.address = form.address.data
+		editshelter.city = form.city.data
+		editshelter.state = form.state.data
+		editshelter.zipCode = form.zipCode.data
+		editshelter.website = form.website.data
+		editshelter.maximum_capacity = form.maximum_capacity.data
+		editshelter.current_capacity = form.current_capacity.data
+		db.session.add(editshelter)
+		db.session.commit()
+		flash("You just edited shelter %s" % editshelter.name)
+		return redirect(url_for('index'))
+	return render_template('edit_shelter.html', 
+							editshelter=editshelter, 
+							form=form)
+
+@app.route('/<int:shelter_id>/<path:shelter_name>/delete/', methods=['GET', 'POST'])
 def delete_shelter(shelter_id, shelter_name):
 	deleteshelter = db.session.query(Shelter).filter_by(id=shelter_id).one()
 	if request.method == "POST":
@@ -133,7 +154,47 @@ def delete_puppy(shelter_id, shelter_name, puppy_id):
 	return render_template('delete_puppy_profile.html', deletepuppy=deletepuppy)
 
 	
-# create a new shelter ######################
-# create a new adoptor ######################
+# CRUD adoptor ######################
+@app.route('/adoptors', methods=['GET', 'POST'])
+def adoptor_list():
+	adoptors = db.session.query(Adoptors).order_by(Adoptors.id.desc()).all()
+	return render_template('adoptor_list.html', adoptors=adoptors)
+	
+
+@app.route('/new-adoptor', methods=['GET', 'POST'])
+def new_adoptor():
+	form = CreateAdoptor()
+	if form.validate_on_submit():
+		newadoptor = Adoptors(name=form.name.data)
+		db.session.add(newadoptor)
+		db.session.commit()
+		flash('Just created a new adoptor named %s' % newadoptor.name)
+		return redirect(url_for('adoptor_list'))
+	return render_template('create_adoptor.html', form=form)
+
+@app.route('/adoptors/profile/<int:adoptor_id>/edit/', methods=['GET','POST'])
+def edit_adoptor(adoptor_id):
+	editadoptor = db.session.query(Adoptors).filter_by(id=adoptor_id).one()
+	form = CreateAdoptor(obj=editadoptor)
+	if form.validate_on_submit():
+		editadoptor.name = form.name.data
+		db.session.add(editadoptor)
+		db.session.commit()
+		flash('Successful edit of this adoptor who is now named %s' % editadoptor.name)
+		return redirect(url_for('adoptor_list'))
+	return render_template('edit_adoptor.html', editadoptor=editadoptor, form=form)
+
+
+@app.route('/adoptors/profile/<int:adoptor_id>/delete/', methods=['GET','POST'])
+def delete_adoptor(adoptor_id):
+	deleteadoptor = db.session.query(Adoptors).filter_by(id=adoptor_id).one()
+	if request.method == 'POST':
+		db.session.delete(deleteadoptor)
+		db.session.commit()
+		flash('You just deleted %s' % deleteadoptor.name)
+		return redirect(url_for('adoptor_list'))
+
+	return render_template('delete_adoptor.html', deleteadoptor=deleteadoptor)
+
 
 

@@ -20,3 +20,6 @@ class CreateShelter(Form):
 	website = TextField('Website')
 	maximum_capacity = IntegerField('Max Capacity')
 	current_capacity = IntegerField('Current Capacity')
+
+class CreateAdoptor(Form):
+	name = TextField('Name', validators=[DataRequired()])

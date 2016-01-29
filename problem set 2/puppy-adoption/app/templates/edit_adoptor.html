@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Edit an Adoptor</h1>
+
+<form method="post" action="">
+	{{ form.csrf_token }}
+	
+{{ form.name.label }}{{ form.name }}<br>
+
+<button type="submit" value="Edit">Edit</button>
+</form>
+
+
+{% endblock %}

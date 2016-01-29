@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Edit Shelter</h1>
+ {{ editshelter.name }}
+
+ <form method="post" action="">
+	{{ form.csrf_token }}
+	
+{{ form.name.label }}{{ form.name }}<br>
+
+<span class="error bg-danger">
+		{% if form.name.errors %}
+		{% for error in form.name.errors %}
+		<div class="bg-danger">{{ error }}</div>
+		{% endfor %}
+		{% endif %}
+	</span>
+
+{{ form.address.label }}{{ form.address }}<br>
+{{ form.city.label }}{{ form.city }}<br>
+{{ form.zipCode.label }}{{ form.zipCode }}<br>
+{{ form.website.label }}{{ form.website }}<br>
+{{ form.maximum_capacity.label }}{{ form.maximum_capacity }}<br>
+{{ form.current_capacity.label }}{{ form.current_capacity }}<br>
+<button type="submit" value="Edit">Edit</button>
+</form>
+
+{% endblock %}
