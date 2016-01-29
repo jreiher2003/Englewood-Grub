@@ -128,7 +128,10 @@ def edit_puppy(shelter_id,shelter_name,puppy_id):
 		db.session.add(editpuppy)
 		db.session.commit()
 		flash('%s was successfully edited' % editpuppy.name, 'success')
-		return redirect(url_for('index'))
+		return redirect(url_for('puppy_profile', 
+								shelter_id=editpuppy.shelter.id,
+								shelter_name=editpuppy.shelter.name_slug,
+								puppy_id=editpuppy.id))
 	return render_template("edit_puppy_profile.html", 
 							editpuppy=editpuppy, 
 							form=form)
@@ -178,7 +181,9 @@ def edit_adoptor(adoptor_id):
 		db.session.commit()
 		flash('Successful edit of this adoptor who is now named %s' % editadoptor.name)
 		return redirect(url_for('adoptor_list'))
-	return render_template('edit_adoptor.html', editadoptor=editadoptor, form=form)
+	return render_template('edit_adoptor.html', 
+							editadoptor=editadoptor, 
+							form=form)
 
 
 @app.route('/adoptors/profile/<int:adoptor_id>/delete/', methods=['GET','POST'])
@@ -191,6 +196,10 @@ def delete_adoptor(adoptor_id):
 		return redirect(url_for('adoptor_list'))
 
 	return render_template('delete_adoptor.html', deleteadoptor=deleteadoptor)
+
+
+### CRUD for adopting a puppy
+
 
 
 
