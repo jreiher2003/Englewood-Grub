@@ -36,7 +36,7 @@ def create_random_age():
 
 #This method will create a random weight between 1.0-40.0 pounds (or whatever unit of measure you prefer)
 def create_random_weight():
-	return random.uniform(1.0, 40.0)
+	return random.uniform(1.0, 75.0)
 
 
 # Query the current occupancy of a specific shelter. 
