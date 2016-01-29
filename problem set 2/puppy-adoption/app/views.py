@@ -199,6 +199,11 @@ def delete_adoptor(adoptor_id):
 
 
 ### CRUD for adopting a puppy
+@app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>/adopt/', methods=['GET','POST'])
+def adoptions(shelter_id,shelter_name,puppy_id):
+	puppy = db.session.query(Puppy).filter_by(id=puppy_id).one()
+	adoptors = db.session.query(Adoptors).all()
+	return render_template('adopt_puppy.html', puppy=puppy, adoptors=adoptors)
 
 
 

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	Who do you want to adopt {{ puppy.name }}?
+	<select>
+		<option value="None">Select an Adoptor</option>
+	{% for adoptor in adoptors %}
+		<option value="{{ adoptor.name }}">{{ adoptor.name }}</option>
+	{% endfor %}
+	</select>
+	<a href="#" class="btn btn-info">Adopt</a>
+{% endblock %}
