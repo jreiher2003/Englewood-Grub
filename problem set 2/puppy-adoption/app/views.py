@@ -20,7 +20,7 @@ def index():
 	shelter = db.session.query(Shelter).order_by("current_capacity asc").all()
 	return render_template('index.html', shelter=shelter)
 
-
+##  CRUD for Shelter class  ##
 @app.route('/<int:shelter_id>/<path:shelter_name>/page/<int:page>')
 def shelter_profile(shelter_id,shelter_name, page=1):
 	shelter_profile = db.session.query(Shelter).filter_by(id=shelter_id).one()
@@ -86,19 +86,14 @@ def delete_shelter(shelter_id, shelter_name):
 		return redirect(url_for('index'))
 	return render_template('delete_shelter.html', deleteshelter=deleteshelter)
 
-
+###  CRUD for Puppy  ######
 @app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>')
 def puppy_profile(shelter_id,shelter_name,puppy_id):
 	puppy = db.session.query(Puppy).filter_by(id=puppy_id).one()
 	return render_template('puppy_profile.html', puppy=puppy)
 
 
-## CRUD operations Puppy, Shelter Adoptors ##
-#############################################
-# Query the current occupancy of a specific shelter. 
-
-
-## create a new puppy ########################
+## create 
 @app.route('/new-puppy', methods=['GET', 'POST'])
 def new_puppy():
 	form = CreatePuppy()
@@ -159,7 +154,7 @@ def delete_puppy(shelter_id, shelter_name, puppy_id):
 def adoptor_list():
 	adoptors = db.session.query(Adoptors).order_by(Adoptors.id.desc()).all()
 	return render_template('adoptor_list.html', adoptors=adoptors)
-	
+
 
 @app.route('/new-adoptor', methods=['GET', 'POST'])
 def new_adoptor():
@@ -171,6 +166,7 @@ def new_adoptor():
 		flash('Just created a new adoptor named %s' % newadoptor.name)
 		return redirect(url_for('adoptor_list'))
 	return render_template('create_adoptor.html', form=form)
+
 
 @app.route('/adoptors/profile/<int:adoptor_id>/edit/', methods=['GET','POST'])
 def edit_adoptor(adoptor_id):
