@@ -5,7 +5,7 @@
 Do you want to delete {{ deletepuppy.name }}?
 <form method="post" action="">
 <input class="btn btn-danger" type="submit" value="Delete Item">
-<a class="btn btn-default" href="{{url_for('index')}}">Cancel</a>
+<a class="btn btn-default" href="{{ url_for('puppy_profile',shelter_id=deletepuppy.shelter.id,shelter_name=deletepuppy.shelter.name_slug,puppy_id=deletepuppy.id) }}">Cancel</a>
 </form>
 
 {% endblock %}
