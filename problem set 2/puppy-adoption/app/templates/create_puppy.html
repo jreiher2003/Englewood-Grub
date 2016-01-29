@@ -9,7 +9,7 @@
 	{{ form.csrf_token }}
 	{{ form.name.label }}{{ form.name }}<br>
 	{{ form.gender.label }}{{ form.gender }}
-	{{ form.picture.label }}{{ form.picture(placeholder="https://pixabay.com/") }}<br>
+	{{ form.picture.label }}{{ form.picture(type='url',placeholder="https://pixabay.com/") }}<br>
 	{{ form.specialNeeds.label }}{{ form.specialNeeds }}<br>
 	
 	<input type="submit" value="create">
