@@ -10,3 +10,13 @@ class CreatePuppy(Form):
 	weight = IntegerField('Weight')
 	specialNeeds = SelectField('Special Needs', choices=[('None','None'),('3-legged', '3-legged'), ('Blind', 'Blind'),('Deaf', 'Deaf')])
 	description = TextAreaField('Description', validators=[Length(max=500)])
+
+class CreateShelter(Form):
+	name = TextField('Name', validators=[DataRequired()])
+	address = TextField('Address', validators=[DataRequired()])
+	city = TextField('City')
+	state = TextField('State')
+	zipCode = IntegerField('Zip')
+	website = TextField('Website')
+	maximum_capacity = IntegerField('Max Capacity')
+	current_capacity = IntegerField('Current Capacity')

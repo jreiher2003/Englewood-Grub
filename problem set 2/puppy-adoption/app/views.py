@@ -4,7 +4,7 @@ import datetime
 import random
 from werkzeug import secure_filename
 from flask import render_template, url_for, flash, redirect, request
-from forms import CreatePuppy
+from forms import CreatePuppy, CreateShelter
 from app.models import Shelter, Puppy, Profile
 from app.utils import *
 
@@ -30,6 +30,40 @@ def shelter_profile(shelter_id,shelter_name, page=1):
 							shelter_name=shelter_name,
 							shelter_profile=shelter_profile,
 						    puppy=puppy)
+
+
+@app.route('/new-shelter', methods=['GET', 'POST'])
+def new_shelter():
+	error = None
+	form = CreateShelter()
+	if form.validate_on_submit():
+		newshelter = Shelter(name=form.name.data, 
+							 address=form.address.data,
+							 city=form.city.data,
+							 state=form.state.data,
+							 zipCode=form.zipCode.data,
+							 website=form.website.data,
+							 maximum_capacity=form.maximum_capacity.data,
+							 current_capacity=form.current_capacity.data
+							 )
+		db.session.add(newshelter)
+		db.session.commit()
+		flash("Congrats You just created a new shelter named %s" % newshelter.name)
+		return redirect(url_for('index'))
+
+	return render_template('create_shelter.html', 
+							form=form, 
+							error=error)
+
+@app.route('/<int:shelter_id>/<path:shelter_name>', methods=['GET', 'POST'])
+def delete_shelter(shelter_id, shelter_name):
+	deleteshelter = db.session.query(Shelter).filter_by(id=shelter_id).one()
+	if request.method == "POST":
+		db.session.delete(deleteshelter)
+		db.session.commit()
+		flash('Successfully deleted shelter %s' % deleteshelter.name)
+		return redirect(url_for('index'))
+	return render_template('delete_shelter.html', deleteshelter=deleteshelter)
 
 
 @app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>')
@@ -79,7 +113,9 @@ def edit_puppy(shelter_id,shelter_name,puppy_id):
 		db.session.commit()
 		flash('%s was successfully edited' % editpuppy.name, 'success')
 		return redirect(url_for('index'))
-	return render_template("edit_puppy_profile.html", editpuppy=editpuppy, form=form)
+	return render_template("edit_puppy_profile.html", 
+							editpuppy=editpuppy, 
+							form=form)
 
 
 @app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>/delete/', methods=['GET','POST'])
