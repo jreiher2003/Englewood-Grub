@@ -8,7 +8,7 @@
 <form id="multiselectForm" method="post" class="form-horizontal"action="">
 	{{ form.csrf_token }}
 	{{ form.name.label }}{{ form.name }}<br>
-	{{ form.gender.label }}{{ form.gender }}<br>
+	{{ form.gender.label }}{{ form.gender }}
 	{{ form.picture.label }}{{ form.picture(placeholder="https://pixabay.com/") }}<br>
 	{{ form.specialNeeds.label }}{{ form.specialNeeds }}<br>
 	
