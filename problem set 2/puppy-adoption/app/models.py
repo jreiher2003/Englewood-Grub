@@ -38,7 +38,6 @@ class Puppy(db.Model):
     shelter = db.relationship(Shelter)
     weight = db.Column(db.Numeric(10))
     profile = db.relationship("Profile", uselist=False, back_populates="puppy")
-    # adoption = db.relationship("Adopters", secondary=AdoptorsPuppies, back_populates="puppies")
 
     def __repr__(self):
         return '<name>: {}'.format(self.name)
@@ -65,7 +64,6 @@ class Adoptors(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250))
-    # puppies = db.relationship("Puppy", secondary=AdoptorsPuppies, back_populates="adoption")
 
     def __repr__(self):
         return '<name>: {}'.format(self.name)
@@ -73,10 +71,9 @@ class Adoptors(db.Model):
 
 class AdoptorsPuppies(db.Model):
     __tablename__ = 'adopters_puppies'
-
-    adoptor_id = db.Column(db.Integer,db.ForeignKey('adoptors.id'), primary_key = True)
-    puppy_id = db.Column(db.Integer,db.ForeignKey('puppy.id'), primary_key = True)
     
+    adoptor_id = db.Column(db.Integer,db.ForeignKey('adoptors.id'), primary_key=True)
+    puppy_id = db.Column(db.Integer,db.ForeignKey('puppy.id'), primary_key=True)
     puppies = db.relationship(Puppy)
     adoptors = db.relationship(Adoptors)
 

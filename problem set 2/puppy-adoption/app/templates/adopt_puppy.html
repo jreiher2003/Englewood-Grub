@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	Who do you want to adopt {{ puppy.name }}?
-	<select>
-		<option value="None">Select an Adoptor</option>
-	{% for adoptor in adoptors %}
-		<option value="{{ adoptor.name }}">{{ adoptor.name }}</option>
+{{ form.name.choices }}
+<form method="post" action="">
+
+	Who do you want to adopt {{ puppy.name }}?	{{ form.name }}
+	{% for ad in adoptors %}
+	
+	<a href="{{ url_for('adoption_success',shelter_id=puppy.shelter.id, shelter_name=puppy.shelter.name_slug, puppy_id=puppy.id, adoptor_id=ad.id) }}" class="btn btn-info">Adopt</a>
+	
 	{% endfor %}
-	</select>
-	<a href="#" class="btn btn-info">Adopt</a>
+
+</form>
+
+{% for ad in adoptors %}
+<a href="{{ url_for('adoption_success',shelter_id=puppy.shelter.id, shelter_name=puppy.shelter.name_slug, puppy_id=puppy.id, adoptor_id=ad.id) }}">{{ ad.name }}</a><br>
+{% endfor %}
+	
+	<br><br><hr>
+Who do you want to adopt {{ puppy.name }}?	{{ form.name }}
 {% endblock %}

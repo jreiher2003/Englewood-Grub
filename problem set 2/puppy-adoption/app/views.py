@@ -4,8 +4,8 @@ import datetime
 import random
 from werkzeug import secure_filename
 from flask import render_template, url_for, flash, redirect, request
-from forms import CreatePuppy, CreateShelter, CreateAdoptor
-from app.models import Shelter, Puppy, Profile, Adoptors
+from forms import CreatePuppy, CreateShelter, CreateAdoptor, Adoptions
+from app.models import Shelter, Puppy, Profile, Adoptors, AdoptorsPuppies
 from app.utils import *
 
 
@@ -203,8 +203,18 @@ def delete_adoptor(adoptor_id):
 def adoptions(shelter_id,shelter_name,puppy_id):
 	puppy = db.session.query(Puppy).filter_by(id=puppy_id).one()
 	adoptors = db.session.query(Adoptors).all()
-	return render_template('adopt_puppy.html', puppy=puppy, adoptors=adoptors)
+	form = Adoptions(obj=adoptors)
+	# form.name.choices = [(ad.id, ad.name) for ad in adoptors]
+	return render_template('adopt_puppy.html', 
+							form=form, 
+							puppy=puppy, 
+							adoptors=adoptors)
 
+@app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>/adopt/<int:adoptor_id>/', methods=['GET','POST'])
+def adoption_success(shelter_id,shelter_name,puppy_id,adoptor_id):
+	return render_template('adoption_success.html')
 
-
-
+@app.route('/list-adoptions', methods=['GET', 'POST'])
+def list_adoptions():
+	adoptions = db.session.query(AdoptorsPuppies).all()
+	return render_template('list_adoptions.html', adoptions=adoptions)

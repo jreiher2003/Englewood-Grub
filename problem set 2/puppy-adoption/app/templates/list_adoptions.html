@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for adoption in adoptions %}
+{{ adoption.adoptors.name }}{{ adoption.adoptor_id }}	has adopted {{ adoption.puppy_id }}who is named {{ adoption.puppies.name }}
+
+{% endfor %}
+{% endblock %}

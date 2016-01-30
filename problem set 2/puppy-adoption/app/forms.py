@@ -1,3 +1,6 @@
+
+from app import db
+from app.models import Adoptors
 from flask_wtf import Form 
 from wtforms import TextField, RadioField, BooleanField, TextAreaField, SelectField, IntegerField
 from wtforms.validators import DataRequired, Length, URL, NumberRange
@@ -23,3 +26,7 @@ class CreateShelter(Form):
 
 class CreateAdoptor(Form):
 	name = TextField('Name', validators=[DataRequired()])
+
+class Adoptions(Form):
+    adoptors = db.session.query(Adoptors).all()
+    name = SelectField(u'Adoptors', choices=[(ad.id, ad.name) for ad in adoptors])
