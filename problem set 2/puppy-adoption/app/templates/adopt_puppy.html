@@ -18,5 +18,7 @@
 {% endfor %}
 	
 	<br><br><hr>
-Who do you want to adopt {{ puppy.name }}?	{{ form.name }}
+Who do you want to adopt {{ puppy.name }}?	{{ form.name }} 
+
+{{ form.submit(class="btn btn-info") }}
 {% endblock %}

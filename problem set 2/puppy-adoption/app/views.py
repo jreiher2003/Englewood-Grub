@@ -204,7 +204,7 @@ def adoptions(shelter_id,shelter_name,puppy_id):
 	puppy = db.session.query(Puppy).filter_by(id=puppy_id).one()
 	adoptors = db.session.query(Adoptors).all()
 	form = Adoptions(obj=adoptors)
-	# form.name.choices = [(ad.id, ad.name) for ad in adoptors]
+	form.name.choices = [(ad.id, ad.name) for ad in adoptors]
 	return render_template('adopt_puppy.html', 
 							form=form, 
 							puppy=puppy, 
@@ -213,6 +213,8 @@ def adoptions(shelter_id,shelter_name,puppy_id):
 @app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>/adopt/<int:adoptor_id>/', methods=['GET','POST'])
 def adoption_success(shelter_id,shelter_name,puppy_id,adoptor_id):
 	return render_template('adoption_success.html')
+
+
 
 @app.route('/list-adoptions', methods=['GET', 'POST'])
 def list_adoptions():
