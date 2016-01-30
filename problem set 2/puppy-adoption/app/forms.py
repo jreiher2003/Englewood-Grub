@@ -24,6 +24,4 @@ class CreateShelter(Form):
 class CreateAdoptor(Form):
 	name = TextField('Name', validators=[DataRequired()])
 
-class Adoptions(Form):
-    name = SelectField(u'Adoptors')
-    submit = SubmitField("Adopt")
+
