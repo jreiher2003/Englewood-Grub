@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<form method="post" action="">
+Who do you want to adopt {{ puppy.name }}?	
 {% for ad in adoptors %}
 <a href="{{ url_for('adoption_success',shelter_id=puppy.shelter.id, shelter_name=puppy.shelter.name_slug, puppy_id=puppy.id, adoptor_id=ad.id) }}">{{ ad.name }}</a><br>
 {% endfor %}
-<form method="post" action="">
-Who do you want to adopt {{ puppy.name }}?	{{ form.name }} 
 
-{{ form.submit(class="btn btn-info") }}
 </form>
 {% endblock %}

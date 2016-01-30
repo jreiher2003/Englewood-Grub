@@ -2,7 +2,7 @@
 
 {% block content %}
 {% for adoption in adoptions %}
-{{ adoption.adoptors.name }}{{ adoption.adoptor_id }}	has adopted {{ adoption.puppy_id }}who is named {{ adoption.puppies.name }}
+{{ adoption.adoptors.name }}	has adopted  {{ adoption.puppies.name }} from {{ adoption.puppies.shelter.name }}<br>
 
 {% endfor %}
 {% endblock %}

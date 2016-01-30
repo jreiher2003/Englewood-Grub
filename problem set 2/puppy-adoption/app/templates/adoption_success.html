@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-successful adoption
+Are you sure you want {{ puppy.name }} to be adopted by {{ adoptor.name }} 
+<form method="post" action="">
+<input type="hidden" name="puppyname" value="{{ puppy.id }}"/>
+<input type="hidden" name="adoptorname" value="{{ adoptor.id }}"/>
+<input type='submit' value="Yes">
+</form>
 {% endblock %}

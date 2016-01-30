@@ -4,7 +4,7 @@ import datetime
 import random
 from werkzeug import secure_filename
 from flask import render_template, url_for, flash, redirect, request
-from forms import CreatePuppy, CreateShelter, CreateAdoptor, Adoptions
+from forms import CreatePuppy, CreateShelter, CreateAdoptor
 from app.models import Shelter, Puppy, Profile, Adoptors, AdoptorsPuppies
 from app.utils import *
 
@@ -203,16 +203,21 @@ def delete_adoptor(adoptor_id):
 def adoptions(shelter_id,shelter_name,puppy_id):
 	puppy = db.session.query(Puppy).filter_by(id=puppy_id).one()
 	adoptors = db.session.query(Adoptors).all()
-	form = Adoptions(obj=adoptors)
-	form.name.choices = [(ad.id, ad.name) for ad in adoptors]
-	return render_template('adopt_puppy.html', 
-							form=form, 
+	return render_template('adopt_puppy.html',  
 							puppy=puppy, 
 							adoptors=adoptors)
 
 @app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>/adopt/<int:adoptor_id>/', methods=['GET','POST'])
 def adoption_success(shelter_id,shelter_name,puppy_id,adoptor_id):
-	return render_template('adoption_success.html')
+	puppy = db.session.query(Puppy).filter_by(id=puppy_id).one()
+	adoptor = db.session.query(Adoptors).filter_by(id=adoptor_id).one()
+	if request.method == 'POST':
+		adoption = AdoptorsPuppies(puppy_id=request.form['puppyname'], adoptor_id=request.form['adoptorname'])
+		db.session.add(adoption)
+		db.session.commit()
+		flash('Successful adoption')
+		return redirect(url_for('list_adoptions'))
+	return render_template('adoption_success.html', puppy=puppy, adoptor=adoptor)
 
 
 
