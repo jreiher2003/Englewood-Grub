@@ -213,7 +213,9 @@ def adoption_success(shelter_id,shelter_name,puppy_id,adoptor_id):
 	adoptor = db.session.query(Adoptors).filter_by(id=adoptor_id).one()
 	if request.method == 'POST':
 		adoption = AdoptorsPuppies(puppy_id=request.form['puppyname'], adoptor_id=request.form['adoptorname'])
+		puppy.show = False
 		db.session.add(adoption)
+		db.session.add(puppy)
 		db.session.commit()
 		flash('Successful adoption')
 		return redirect(url_for('list_adoptions'))
