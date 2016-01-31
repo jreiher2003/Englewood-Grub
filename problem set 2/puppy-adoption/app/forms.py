@@ -12,6 +12,7 @@ class CreatePuppy(Form):
 	description = TextAreaField('Description', validators=[Length(max=500)])
 	breed = SelectField('Breed', choices=[('Bulldog','Bulldog'),('Boston Terrier','Boston Terrier'),('Chihuahua', 'Chihuahua'),('German Shepherd', 'German Shepherd'),("Greyhound","Greyhound"),("Labrador Retriever","Labrador Retriever"),("Maltese","Maltese"),("Schnauzer","Schnauzer"),("Pug","Pug"),("Saint Bernard","Saint Bernard"),("Shih-Tzu","Shih-Tzu"),("Siberian Husky","Siberian Husky"),("Whippet","Whippet")])
 
+
 class CreateShelter(Form):
 	name = TextField('Name', validators=[DataRequired()])
 	address = TextField('Address', validators=[DataRequired()])
@@ -21,6 +22,7 @@ class CreateShelter(Form):
 	website = TextField('Website')
 	maximum_capacity = IntegerField('Max Capacity')
 	current_capacity = IntegerField('Current Capacity')
+
 
 class CreateAdoptor(Form):
 	name = TextField('Name', validators=[DataRequired()])

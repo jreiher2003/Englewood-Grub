@@ -9,16 +9,12 @@ from app.models import Shelter, Puppy, Profile, Adoptors, AdoptorsPuppies
 from app.utils import *
 
 
-## front page with  ordered by shelter, place to create adoptor. 
-## shelter page display puppyies with pagination
-## click on a puppy to see profile of puppy
-
-
 @app.route('/')
 def index():
 	""" front page of site that lists all shelters"""
 	shelter = db.session.query(Shelter).order_by("current_capacity asc").all()
 	return render_template('index.html', shelter=shelter)
+
 
 ##  CRUD for Shelter class  ##
 @app.route('/<int:shelter_id>/<path:shelter_name>/page/<int:page>')
@@ -50,10 +46,10 @@ def new_shelter():
 		db.session.commit()
 		flash("Congrats You just created a new shelter named %s" % newshelter.name)
 		return redirect(url_for('index'))
-
 	return render_template('create_shelter.html', 
 							form=form, 
 							error=error)
+
 
 @app.route('/<int:shelter_id>/<path:shelter_name>/edit/', methods=['GET','POST'])
 def edit_shelter(shelter_id,shelter_name):
@@ -76,6 +72,7 @@ def edit_shelter(shelter_id,shelter_name):
 							editshelter=editshelter, 
 							form=form)
 
+
 @app.route('/<int:shelter_id>/<path:shelter_name>/delete/', methods=['GET', 'POST'])
 def delete_shelter(shelter_id, shelter_name):
 	deleteshelter = db.session.query(Shelter).filter_by(id=shelter_id).one()
@@ -85,6 +82,7 @@ def delete_shelter(shelter_id, shelter_name):
 		flash('Successfully deleted shelter %s' % deleteshelter.name)
 		return redirect(url_for('index'))
 	return render_template('delete_shelter.html', deleteshelter=deleteshelter)
+
 
 ###  CRUD for Puppy  ######
 @app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>')
@@ -110,13 +108,11 @@ def new_puppy():
 		db.session.commit()
 		flash('Successfully Added a Puppy to '+ currentcapacity.name, 'success')
 		return redirect(url_for('index'))
-
 	return render_template('create_puppy.html', form=form)
 
 
 @app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>/edit/', methods=['GET','POST'])
 def edit_puppy(shelter_id,shelter_name,puppy_id):
-	# editpuppy = db.session.query(Puppy).filter_by(id=puppy_id).one()
 	editpuppy=db.session.query(Puppy).join(Profile, Puppy.id==Profile.puppy_id).filter(Puppy.id==puppy_id).one()
 	form = CreatePuppy(obj=editpuppy)
 	if form.validate_on_submit():
@@ -194,7 +190,6 @@ def delete_adoptor(adoptor_id):
 		db.session.commit()
 		flash('You just deleted %s' % deleteadoptor.name)
 		return redirect(url_for('adoptor_list'))
-
 	return render_template('delete_adoptor.html', deleteadoptor=deleteadoptor)
 
 
@@ -206,6 +201,7 @@ def adoptions(shelter_id,shelter_name,puppy_id):
 	return render_template('adopt_puppy.html',  
 							puppy=puppy, 
 							adoptors=adoptors)
+
 
 @app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>/adopt/<int:adoptor_id>/', methods=['GET','POST'])
 def adoption_success(shelter_id,shelter_name,puppy_id,adoptor_id):
@@ -223,7 +219,6 @@ def adoption_success(shelter_id,shelter_name,puppy_id,adoptor_id):
 		flash('Successful adoption')
 		return redirect(url_for('list_adoptions'))
 	return render_template('adoption_success.html', puppy=puppy, adoptor=adoptor)
-
 
 
 @app.route('/list-adoptions', methods=['GET', 'POST'])

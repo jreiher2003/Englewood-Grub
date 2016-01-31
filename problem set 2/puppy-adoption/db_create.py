@@ -7,6 +7,7 @@ import datetime
 import random
 
 db.create_all() 
+
 adoptor1 = Adoptors(name="Jeff")
 db.session.add(adoptor1)
 adopter2 = Adoptors(name="Mark")
