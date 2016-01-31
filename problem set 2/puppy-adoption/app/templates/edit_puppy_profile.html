@@ -7,13 +7,15 @@
 <form method="post" class="form-horizontal" action="">
 	{{ form.csrf_token }}
 	{{ form.name.label }}{{ form.name }}<br>
-	{{ form.gender.label }}{{ form.gender }}<br>
+	{{ form.gender.label }}{{ form.gender }}
 	{{ form.picture.label }}{{ form.picture(type="url", placeholder="https://pixabay.com/") }}<br>
+	{{ form.breed.label }}{{ form.breed }}
 	{{ form.weight.label }}{{ form.weight(type="number", min='1', max='75') }}<br>
 	{{ form.specialNeeds.label }}{{ form.specialNeeds }}<br>
 	
 	<input type="submit" value="Edit">
 </form>
+<a href="{{ url_for('shelter_profile', shelter_id=editpuppy.shelter.id,shelter_name=editpuppy.shelter.name_slug, page=1) }}">Cancel</a><br>
 
 
 {% endblock %}

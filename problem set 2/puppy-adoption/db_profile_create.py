@@ -1,7 +1,7 @@
 import random
 
-breed = ["Bulldog", "Collie", "Boston Terrier", "Chihuahua", "German Shepherd", "Greyhound", "Labrador Retriever",
-		"Maltese", "Schnauzer", "Pug", "Saint Bernard", "Shih-Tzu", "Siberian Husky", "Whippet"]
+breed = ["Bulldog", "Collie", "Boston Terrier", "Chihuahua", "German Shepherd", "Greyhound", "Labrador Retriever", "Maltese", "Schnauzer", "Pug", "Saint Bernard", "Shih-Tzu", "Siberian Husky", "Whippet"]
+
 
 puppy_adj = ["active", 'good', "affectionate", "alert", "athletic", "brave", "bright-eyed", "crafty", "cuddly", 
  			"cute", "energetic", "fluffy", "frisky", "gentle", "goofy", "happy", "huggable", "mischievous", "potty-trained", "zippy", "wonderful", "well-trained", "wagging", "unique", "trusty", "tough", "smart"]
@@ -13,7 +13,6 @@ sp_needs = ['Blind', 'Deaf', '3 legged', 'None', 'None','None', 'None', 'None','
 def descriptions():
 	vowels = ('a','e','i','o','u','A','E','I','O','U')
 	x = random.choice(puppy_adj)
-	y = random.choice(breed)
 	v = random.choice(puppy_verb)
 	if x.startswith(vowels):
 		z = " is an " + x
@@ -27,7 +26,8 @@ def special_needs():
 	return random.choice(sp_needs)
 
 
-def breed():
-	return random.choice(breed)
+def breeds():
+    return random.choice(breed)
+
 
 
