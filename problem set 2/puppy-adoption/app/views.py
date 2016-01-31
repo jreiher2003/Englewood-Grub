@@ -211,9 +211,12 @@ def adoptions(shelter_id,shelter_name,puppy_id):
 def adoption_success(shelter_id,shelter_name,puppy_id,adoptor_id):
 	puppy = db.session.query(Puppy).filter_by(id=puppy_id).one()
 	adoptor = db.session.query(Adoptors).filter_by(id=adoptor_id).one()
+	currentcapacity = db.session.query(Shelter).filter_by(id=shelter_id).one()
 	if request.method == 'POST':
 		adoption = AdoptorsPuppies(puppy_id=request.form['puppyname'], adoptor_id=request.form['adoptorname'])
 		puppy.show = False
+		currentcapacity.current_capacity = currentcapacity.current_capacity - 1
+		db.session.add(currentcapacity)
 		db.session.add(adoption)
 		db.session.add(puppy)
 		db.session.commit()

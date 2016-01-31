@@ -23,10 +23,10 @@ def descriptions():
 	v = random.choice(puppy_verb)
 	if x.startswith(vowels):
 		z = " is an " + x
-		return "What you have here is a " + y + ". " + "This "+ y + z + ' dog that will ' + v + " you and your family."
+		return "This " + z + ' dog that will ' + v + " you and your family."
 	else:
 		z = " is a " + x
-		return "What you have here is a " + y + ". " + "This "+ y + z + ' dog that will ' + v + " you and your family." 
+		return "This " + z + ' dog that will ' + v + " you and your family." 
 
 def create_random_age():
 	today = datetime.date.today()
