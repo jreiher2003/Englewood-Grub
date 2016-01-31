@@ -12,7 +12,7 @@
 <span class="error bg-danger">
 {% if form.name.errors %}
 {% for error in form.name.errors %}
-{{ error }}
+<div class="bg-danger">{{ error }}</div>
 {% endfor %}
 {% endif %}
 </span><br>

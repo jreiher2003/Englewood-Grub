@@ -1,12 +1,15 @@
 from app import app, db
-from random import randint
-import datetime
-import random
-from werkzeug import secure_filename
-from flask import render_template, url_for, flash, redirect, request
 from forms import CreatePuppy, CreateShelter, CreateAdoptor
 from app.models import Shelter, Puppy, Profile, Adoptors, AdoptorsPuppies
 from app.utils import *
+
+from random import randint
+import datetime
+import random
+import us
+
+from werkzeug import secure_filename
+from flask import render_template, url_for, flash, redirect, request
 
 
 @app.route('/')
@@ -32,6 +35,7 @@ def shelter_profile(shelter_id,shelter_name, page=1):
 def new_shelter():
 	error = None
 	form = CreateShelter()
+	# form.state.choices = [(i.name,i.name) for i in us.states.STATES]
 	if form.validate_on_submit():
 		newshelter = Shelter(name=form.name.data, 
 							 address=form.address.data,

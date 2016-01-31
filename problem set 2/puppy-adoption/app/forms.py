@@ -1,6 +1,8 @@
 from flask_wtf import Form 
-from wtforms import TextField, RadioField, BooleanField, TextAreaField, SelectField, IntegerField, SubmitField, SelectMultipleField
-from wtforms.validators import DataRequired, Length, URL, NumberRange
+from wtforms import TextField, RadioField, BooleanField, TextAreaField, SelectField, IntegerField, SubmitField, SelectMultipleField, StringField
+from wtforms.validators import DataRequired, Length, URL, NumberRange, Regexp
+import us
+import re
 
 
 class CreatePuppy(Form):
@@ -15,13 +17,14 @@ class CreatePuppy(Form):
 
 class CreateShelter(Form):
 	name = TextField('Name', validators=[DataRequired()])
-	address = TextField('Address', validators=[DataRequired()])
-	city = TextField('City')
-	state = TextField('State')
-	zipCode = IntegerField('Zip')
-	website = TextField('Website')
-	maximum_capacity = IntegerField('Max Capacity')
-	current_capacity = IntegerField('Current Capacity')
+	address = TextField('Address', validators=[DataRequired(),Length(max=128,message=(u'Too Long of an Address'))])
+	city = TextField('City', validators=[DataRequired(),Length(max=40,message=(u'Try a shorter City name'))])
+	state = SelectField('State', choices = [(i.name,i.name) for i in us.states.STATES])
+	zipCode = StringField('Zip', validators=[Regexp('^[0-9]{5}(?:-[0-9]{4})?$', message="Not a valid zip code")])
+	website = TextField('Website', validators=[DataRequired(), URL(message="Make sure to include HTTP://")])
+	maximum_capacity = IntegerField('Max Capacity', validators=[DataRequired(), NumberRange(min=5, max=100)])
+	current_capacity = IntegerField('Current Capacity', validators=[NumberRange(min=0, max=100)])
+	submit = SubmitField('Create')
 
 
 class CreateAdoptor(Form):
