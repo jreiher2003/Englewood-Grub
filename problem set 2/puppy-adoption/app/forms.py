@@ -10,6 +10,7 @@ class CreatePuppy(Form):
 	weight = IntegerField('Weight')
 	specialNeeds = SelectField('Special Needs', choices=[('None','None'),('3-legged', '3-legged'), ('Blind', 'Blind'),('Deaf', 'Deaf')])
 	description = TextAreaField('Description', validators=[Length(max=500)])
+	breed = SelectField('Breed', choices=[('Bulldog','Bulldog'),('Boston Terrier','Boston Terrier'),('Chihuahua', 'Chihuahua'),('German Shepherd', 'German Shepherd'),("Greyhound","Greyhound"),("Labrador Retriever","Labrador Retriever"),("Maltese","Maltese"),("Schnauzer","Schnauzer"),("Pug","Pug"),("Saint Bernard","Saint Bernard"),("Shih-Tzu","Shih-Tzu"),("Siberian Husky","Siberian Husky"),("Whippet","Whippet")])
 
 class CreateShelter(Form):
 	name = TextField('Name', validators=[DataRequired()])

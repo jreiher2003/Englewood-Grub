@@ -101,7 +101,7 @@ def new_puppy():
 		newpuppy = Puppy(name=form.name.data, gender=form.gender.data, dateOfBirth=create_random_age(), picture=form.picture.data, shelter_id=add_puppy_to_shelter(), weight=create_random_weight())
 		db.session.add(newpuppy)
 		db.session.commit()
-		newprofile = Profile(specialNeeds=form.specialNeeds.data,description=descriptions(), puppy_id=newpuppy.id)
+		newprofile = Profile(specialNeeds=form.specialNeeds.data,description=descriptions(), breed=form.breed.data, puppy_id=newpuppy.id)
 		db.session.add(newprofile)
 		db.session.commit()
 		currentcapacity = db.session.query(Shelter).filter(Shelter.id==newpuppy.shelter_id).one()
