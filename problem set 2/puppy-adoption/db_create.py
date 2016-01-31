@@ -125,7 +125,7 @@ def populate_profile():
 	""" function to populate description column of Profile table """
 	puppy = db.session.query(Puppy).all()
 	for pup in puppy:
-		new_profile = Profile(description=descriptions(), specialNeeds=special_needs(), puppy_id=pup.id)
+		new_profile = Profile(description=descriptions(), specialNeeds=special_needs(), puppy_id=pup.id, breed=breed())
 		db.session.add(new_profile)
 		db.session.commit()
 	print "profile update"
