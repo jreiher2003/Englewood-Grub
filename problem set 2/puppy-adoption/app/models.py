@@ -30,13 +30,14 @@ class Puppy(db.Model):
     __tablename__ = "puppy"
 
     id = db.Column(db.Integer, primary_key=True)
+    shelter_id = db.Column(db.Integer, db.ForeignKey('shelter.id'))
     name = db.Column(db.String(250), nullable=False)
     gender = db.Column(db.String(6), nullable = False)
     dateOfBirth = db.Column(db.Date)
     picture = db.Column(db.String)
-    shelter_id = db.Column(db.Integer, db.ForeignKey('shelter.id'))
-    shelter = db.relationship(Shelter)
     weight = db.Column(db.Numeric(10))
+    show = db.Column(db.Boolean, default=True)
+    shelter = db.relationship(Shelter)
     profile = db.relationship("Profile", uselist=False, back_populates="puppy")
 
     def __repr__(self):
@@ -48,10 +49,10 @@ class Profile(db.Model):
     __tablename__ = "profile"
 
     id = db.Column(db.Integer, primary_key=True)
-    photo = db.Column(db.String)
+    puppy_id = db.Column(db.Integer, db.ForeignKey('puppy.id'))
+    breed = db.Column(db.String(32))
     description = db.Column(db.String(500))
     specialNeeds = db.Column(db.String(500))
-    puppy_id = db.Column(db.Integer, db.ForeignKey('puppy.id'))
     puppy = db.relationship("Puppy", back_populates="profile")
 
     def __repr__(self):

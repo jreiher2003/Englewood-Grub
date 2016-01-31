@@ -24,7 +24,7 @@ def index():
 @app.route('/<int:shelter_id>/<path:shelter_name>/page/<int:page>')
 def shelter_profile(shelter_id,shelter_name, page=1):
 	shelter_profile = db.session.query(Shelter).filter_by(id=shelter_id).one()
-	puppy = Puppy.query.filter(Puppy.shelter_id==shelter_id).paginate(page,5,False)
+	puppy = Puppy.query.filter(db.and_(Puppy.shelter_id==shelter_id, Puppy.show==True)).paginate(page,5,False)
 	return render_template('shelter_profile.html', 
 							shelter_id=shelter_id,
 							shelter_name=shelter_name,
