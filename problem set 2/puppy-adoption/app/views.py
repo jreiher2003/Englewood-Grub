@@ -158,6 +158,7 @@ def adoptor_list():
 
 @app.route('/new-adoptor', methods=['GET', 'POST'])
 def new_adoptor():
+	error = None
 	form = CreateAdoptor()
 	if form.validate_on_submit():
 		newadoptor = Adoptors(name=form.name.data)
@@ -165,7 +166,7 @@ def new_adoptor():
 		db.session.commit()
 		flash('Just created a new adoptor named %s' % newadoptor.name)
 		return redirect(url_for('adoptor_list'))
-	return render_template('create_adoptor.html', form=form)
+	return render_template('create_adoptor.html', form=form, error=error)
 
 
 @app.route('/adoptors/profile/<int:adoptor_id>/edit/', methods=['GET','POST'])

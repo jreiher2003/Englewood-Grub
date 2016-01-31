@@ -9,6 +9,14 @@
 	
 {{ form.name.label }}{{ form.name }}<br>
 
+<span class="error bg-danger">
+{% if form.name.errors %}
+{% for error in form.name.errors %}
+{{ error }}
+{% endfor %}
+{% endif %}
+</span><br>
+
 <button type="submit" value="Create">Create</button>
 </form>
 
