@@ -110,7 +110,7 @@ def new_puppy():
 		currentcapacity.current_capacity = currentcapacity.current_capacity + 1
 		db.session.add(currentcapacity)
 		db.session.commit()
-		flash('Successfully Added a Puppy to '+ currentcapacity.name, 'success')
+		flash('Successfully Added '+ newpuppy.name + ' to '+ currentcapacity.name, 'success')
 		return redirect(url_for('index'))
 	return render_template('create_puppy.html', form=form)
 
