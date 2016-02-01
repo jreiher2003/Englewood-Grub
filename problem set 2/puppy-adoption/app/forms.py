@@ -3,6 +3,8 @@ from wtforms import TextField, RadioField, BooleanField, TextAreaField, SelectFi
 from wtforms.validators import DataRequired, Length, URL, NumberRange, Regexp
 import us
 import re
+from app import db
+from app.models import Shelter
 
 
 class CreatePuppy(Form):
@@ -13,6 +15,7 @@ class CreatePuppy(Form):
 	specialNeeds = SelectField('Special Needs', choices=[('None','None'),('3-legged', '3-legged'), ('Blind', 'Blind'),('Deaf', 'Deaf')])
 	description = TextAreaField('Description', validators=[Length(max=500)])
 	breed = SelectField('Breed', choices=[('None','None'),('Bulldog','Bulldog'),('Boston Terrier','Boston Terrier'),('Chihuahua', 'Chihuahua'),('German Shepherd', 'German Shepherd'),("Greyhound","Greyhound"),("Labrador Retriever","Labrador Retriever"),("Maltese","Maltese"),("Schnauzer","Schnauzer"),("Pug","Pug"),("Saint Bernard","Saint Bernard"),("Shih-Tzu","Shih-Tzu"),("Siberian Husky","Siberian Husky"),("Whippet","Whippet")])
+	shelter = SelectField('Shelter', coerce=int)
 	submit = SubmitField('Create')
 
 

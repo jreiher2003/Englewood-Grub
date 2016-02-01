@@ -98,9 +98,11 @@ def puppy_profile(shelter_id,shelter_name,puppy_id):
 ## create 
 @app.route('/new-puppy', methods=['GET', 'POST'])
 def new_puppy():
-	form = CreatePuppy()
+	shelterq = db.session.query(Shelter).all()
+	form = CreatePuppy(obj=shelterq)
+	form.shelter.choices = [(i.id,i.name) for i in shelterq]
 	if form.validate_on_submit():
-		newpuppy = Puppy(name=form.name.data, gender=form.gender.data, dateOfBirth=create_random_age(), picture=form.picture.data, shelter_id=add_puppy_to_shelter(), weight=create_random_weight())
+		newpuppy = Puppy(name=form.name.data, gender=form.gender.data, dateOfBirth=create_random_age(), picture=form.picture.data, shelter_id=form.shelter.data, weight=create_random_weight())
 		db.session.add(newpuppy)
 		db.session.commit()
 		newprofile = Profile(specialNeeds=form.specialNeeds.data,description=descriptions(), breed=form.breed.data, puppy_id=newpuppy.id)
