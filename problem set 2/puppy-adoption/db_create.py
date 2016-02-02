@@ -177,6 +177,14 @@ def counting_shows():
 		db.session.commit()
 	print "Successful update"
 
-counting_shows()
+# counting_shows()
 
-# db.session.query(Puppy, Shelter).join(Shelter).filter(Shelter.id == shel.id).count()
+# make sure maximum_capacity > current_capacity
+def overflow():
+	shelter = Shelter.query.all()
+	for shel in shelter:
+		if shel.current_capacity < shel.maximum_capacity:
+			return True
+		else:
+			return False
+print overflow()
