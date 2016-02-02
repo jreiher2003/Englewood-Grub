@@ -105,19 +105,15 @@ def new_puppy():
 	if form.validate_on_submit():
 		newpuppy = Puppy(name=form.name.data, gender=form.gender.data, dateOfBirth=create_random_age(), picture=form.picture.data, shelter_id=form.shelter.data, weight=create_random_weight(), show=True)
 		db.session.add(newpuppy)
-		# db.session.commit()
 		newprofile = Profile(specialNeeds=form.specialNeeds.data,description=descriptions(), breed=form.breed.data, puppy_id=newpuppy.id)
 		db.session.add(newprofile)
-		# db.session.commit()
-		
 		if overflow(newpuppy.shelter_id):
 			db.session.commit()
 			counting_shows()
 			flash('Successfully Added '+ newpuppy.name + ' to '+ newpuppy.shelter.name, 'success')
-
 			return redirect(url_for('index'))
 		else:
-			flash('Shelter has too many puppies try anothor')
+			flash('%s has too many puppies try another'% newpuppy.shelter.name, 'danger')
 			db.session.rollback()
 			counting_shows()
 			return redirect(url_for('index'))
@@ -141,13 +137,22 @@ def edit_puppy(shelter_id,shelter_name,puppy_id):
 		editpuppy.profile.specialNeeds = form.specialNeeds.data
 		editpuppy.shelter_id = form.shelter.data
 		db.session.add(editpuppy)
-		db.session.commit()
-		counting_shows()
-		flash('%s was successfully edited' % editpuppy.name, 'success')
-		return redirect(url_for('puppy_profile', 
-							shelter_id=shelter_id,
-							shelter_name=shelter_name,
-							puppy_id=puppy_id))
+		if overflow(editpuppy.shelter_id):
+			db.session.commit()
+			counting_shows()
+			flash('%s was successfully edited' % editpuppy.name, 'success')
+			return redirect(url_for('puppy_profile', 
+								shelter_id=shelter_id,
+								shelter_name=shelter_name,
+								puppy_id=puppy_id))
+		else:
+			flash('%s has too many puppies try another'% editpuppy.shelter.name, 'danger')
+			db.session.rollback()
+			counting_shows()
+			return redirect(url_for('puppy_profile', 
+								shelter_id=shelter_id,
+								shelter_name=shelter_name,
+								puppy_id=puppy_id))
 	return render_template("edit_puppy_profile.html", 
 							editpuppy=editpuppy, 
 							form=form)
