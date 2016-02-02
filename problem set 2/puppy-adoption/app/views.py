@@ -103,17 +103,14 @@ def new_puppy():
 	form = CreatePuppy(obj=shelterq)
 	form.shelter.choices = [(i.id,i.name) for i in shelterq]
 	if form.validate_on_submit():
-		newpuppy = Puppy(name=form.name.data, gender=form.gender.data, dateOfBirth=create_random_age(), picture=form.picture.data, shelter_id=form.shelter.data, weight=create_random_weight())
+		newpuppy = Puppy(name=form.name.data, gender=form.gender.data, dateOfBirth=create_random_age(), picture=form.picture.data, shelter_id=form.shelter.data, weight=create_random_weight(), show=True)
 		db.session.add(newpuppy)
 		db.session.commit()
 		newprofile = Profile(specialNeeds=form.specialNeeds.data,description=descriptions(), breed=form.breed.data, puppy_id=newpuppy.id)
 		db.session.add(newprofile)
 		db.session.commit()
-		currentcapacity = db.session.query(Shelter).filter(Shelter.id==newpuppy.shelter_id).one()
-		currentcapacity.current_capacity = currentcapacity.current_capacity + 1
-		db.session.add(currentcapacity)
-		db.session.commit()
-		flash('Successfully Added '+ newpuppy.name + ' to '+ currentcapacity.name, 'success')
+		counting_shows()
+		flash('Successfully Added '+ newpuppy.name + ' to '+ newpuppy.shelter.name, 'success')
 		return redirect(url_for('index'))
 	return render_template('create_puppy.html', form=form)
 
@@ -136,12 +133,6 @@ def edit_puppy(shelter_id,shelter_name,puppy_id):
 		db.session.add(editpuppy)
 		db.session.commit()
 		counting_shows()
-		# shelterq = db.session.query(Shelter).all()
-		# for shel in shelterq:
-		# 	shel.currentcapacity = db.session.query(Puppy, Shelter).join(Shelter).filter(db.and_(Shelter.id == shel.id, Puppy.show==True)).count()
-		# 	db.session.add(shel)
-		# 	db.session.commit()
-
 		flash('%s was successfully edited' % editpuppy.name, 'success')
 		return redirect(url_for('puppy_profile', 
 							shelter_id=shelter_id,
@@ -158,10 +149,7 @@ def delete_puppy(shelter_id, shelter_name, puppy_id):
 	if request.method == 'POST':
 		db.session.delete(deletepuppy)
 		db.session.commit()
-		currentcapacity = db.session.query(Shelter).filter(Shelter.id==deletepuppy.shelter_id).one()
-		currentcapacity.current_capacity = currentcapacity.current_capacity - 1
-		db.session.add(currentcapacity)
-		db.session.commit()
+		counting_shows()
 		flash('Puppy %s Deleted' % deletepuppy.name)
 		return redirect(url_for('index'))
 	return render_template('delete_puppy_profile.html', deletepuppy=deletepuppy)
@@ -227,15 +215,13 @@ def adoptions(shelter_id,shelter_name,puppy_id):
 def adoption_success(shelter_id,shelter_name,puppy_id,adoptor_id):
 	puppy = db.session.query(Puppy).filter_by(id=puppy_id).one()
 	adoptor = db.session.query(Adoptors).filter_by(id=adoptor_id).one()
-	currentcapacity = db.session.query(Shelter).filter_by(id=shelter_id).one()
 	if request.method == 'POST':
 		adoption = AdoptorsPuppies(puppy_id=request.form['puppyname'], adoptor_id=request.form['adoptorname'])
 		puppy.show = False
-		currentcapacity.current_capacity = currentcapacity.current_capacity - 1
-		db.session.add(currentcapacity)
 		db.session.add(adoption)
 		db.session.add(puppy)
 		db.session.commit()
+		counting_shows()
 		flash('Successful adoption')
 		return redirect(url_for('list_adoptions'))
 	return render_template('adoption_success.html', puppy=puppy, adoptor=adoptor)
