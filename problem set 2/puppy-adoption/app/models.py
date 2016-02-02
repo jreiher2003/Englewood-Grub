@@ -1,8 +1,9 @@
 from app import db 
 
+
 from slugify import slugify
  
-
+        
 class Shelter(db.Model):
 
     __tablename__ = "shelter"
@@ -77,6 +78,7 @@ class AdoptorsPuppies(db.Model):
     puppy_id = db.Column(db.Integer,db.ForeignKey('puppy.id'), primary_key=True)
     puppies = db.relationship(Puppy)
     adoptors = db.relationship(Adoptors)
+
 
 
 

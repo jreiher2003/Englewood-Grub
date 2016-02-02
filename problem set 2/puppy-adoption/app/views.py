@@ -70,6 +70,7 @@ def edit_shelter(shelter_id,shelter_name):
 		editshelter.current_capacity = form.current_capacity.data
 		db.session.add(editshelter)
 		db.session.commit()
+		counting_shows()
 		flash("You just edited shelter %s" % editshelter.name)
 		return redirect(url_for('index'))
 	return render_template('edit_shelter.html', 
@@ -134,6 +135,7 @@ def edit_puppy(shelter_id,shelter_name,puppy_id):
 		editpuppy.shelter_id = form.shelter.data
 		db.session.add(editpuppy)
 		db.session.commit()
+		counting_shows()
 		# shelterq = db.session.query(Shelter).all()
 		# for shel in shelterq:
 		# 	shel.currentcapacity = db.session.query(Puppy, Shelter).join(Shelter).filter(db.and_(Shelter.id == shel.id, Puppy.show==True)).count()

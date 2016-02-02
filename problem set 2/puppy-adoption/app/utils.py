@@ -59,3 +59,11 @@ def add_puppy_to_shelter():
 		else:
 			arr.remove(shelter_id)
 			
+
+def counting_shows():
+	update_capacity = db.session.query(Shelter).all()
+	for shel in update_capacity:
+		shel.current_capacity = db.session.query(Puppy, Shelter).join(Shelter).filter(db.and_(Shelter.id == shel.id, Puppy.show==True)).count()
+		db.session.add(shel)
+		db.session.commit()
+	print "Successful update"
