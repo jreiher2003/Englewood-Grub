@@ -7,8 +7,14 @@
 	{{ form.csrf_token }}
 	
 {{ form.name.label }}{{ form.name }}<br>
-
-<button type="submit" value="Edit">Edit</button>
+<span class="error bg-danger">
+{% if form.name.errors %}
+{% for error in form.name.errors %}
+<div class="bg-danger">{{ error }}</div>
+{% endfor %}
+{% endif %}
+</span><br>
+{{ form.submit(value="Edit") }}
 </form>
 
 

@@ -33,5 +33,6 @@ class CreateShelter(Form):
 
 class CreateAdoptor(Form):
 	name = TextField('Name', validators=[DataRequired()])
+	submit = SubmitField('Create')
 
 
