@@ -7,13 +7,35 @@
 <form method="post" class="form-horizontal" action="">
 	{{ form.csrf_token }}
 	{{ form.name.label }}{{ form.name }}<br>
+	<span class="error bg-danger">
+		{% if form.name.errors %}
+		{% for error in form.name.errors %}
+		<div class="bg-danger">{{ error }}</div>
+		{% endfor %}
+		{% endif %}
+	</span>
+
 	{{ form.gender.label }}{{ form.gender }}
+	<span class="error bg-danger">
+		{% if form.gender.errors %}
+		{% for error in form.gender.errors %}
+		<div class="bg-danger">{{ error }}</div>
+		{% endfor %}
+		{% endif %}
+	</span>
 	{{ form.picture.label }}{{ form.picture(placeholder="https://pixabay.com/") }}<br>
-	{{ form.breed.label }}{{ form.breed }}
-	{{ form.weight.label }}{{ form.weight(type="number", min='1', max='75') }}<br>
+	<span class="error bg-danger">
+		{% if form.picture.errors %}
+		{% for error in form.picture.errors %}
+		<div class="bg-danger">{{ error }}</div>
+		{% endfor %}
+		{% endif %}
+	</span>
+	{{ form.breed.label }}{{ form.breed }}<br>
 	{{ form.specialNeeds.label }}{{ form.specialNeeds }}<br>
-	{{ form.shelter }}
-	<input type="submit" value="Edit">
+
+	{{ form.shelter.label }} {{ form.shelter }}<br>
+	{{ form.submit(value="Edit") }}
 </form>
 
 <a href="{{ url_for('shelter_profile', shelter_id=editpuppy.shelter.id,shelter_name=editpuppy.shelter.name_slug, page=1) }}">Cancel</a><br>
