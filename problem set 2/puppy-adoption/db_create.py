@@ -180,11 +180,11 @@ def counting_shows():
 # counting_shows()
 
 # make sure maximum_capacity > current_capacity
-def overflow():
-	shelter = Shelter.query.all()
-	for shel in shelter:
-		if shel.current_capacity < shel.maximum_capacity:
-			return True
-		else:
-			return False
-print overflow()
+def overflow(shelter_id):
+	shelter = Shelter.query.filter(Shelter.shelter_id).one()
+	
+	if shelter.current_capacity < shelter.maximum_capacity:
+		return True
+	else:
+		return False
+# print overflow()
