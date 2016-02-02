@@ -4,6 +4,7 @@ import random
 from app import app, db
 from app.models import Shelter, Puppy, Profile
 
+
 puppy_images = ["https://pixabay.com/static/uploads/photo/2015/11/17/13/13/bulldog-1047518_960_720.jpg", "https://pixabay.com/static/uploads/photo/2015/03/26/09/54/pug-690566__180.jpg","https://pixabay.com/static/uploads/photo/2014/03/05/19/23/dog-280332__180.jpg","https://pixabay.com/static/uploads/photo/2015/02/05/12/09/chihuahua-624924__180.jpg","https://pixabay.com/static/uploads/photo/2016/01/05/17/57/dog-1123026__180.jpg","https://pixabay.com/static/uploads/photo/2014/03/14/20/07/painting-287403__180.jpg","https://pixabay.com/static/uploads/photo/2016/01/05/17/51/dog-1123016__180.jpg","https://pixabay.com/static/uploads/photo/2014/07/05/08/50/puppy-384647__180.jpg","https://pixabay.com/static/uploads/photo/2015/12/23/14/29/puppies-1105730__180.jpg","https://pixabay.com/static/uploads/photo/2015/11/17/12/42/puppy-1047454__180.jpg"]
 
 
@@ -61,9 +62,18 @@ def add_puppy_to_shelter():
 			
 
 def counting_shows():
+	""" returns a number. counts all show = True from Puppy and is == current_capacity"""
 	update_capacity = db.session.query(Shelter).all()
 	for shel in update_capacity:
 		shel.current_capacity = db.session.query(Puppy, Shelter).join(Shelter).filter(db.and_(Shelter.id == shel.id, Puppy.show==True)).count()
 		db.session.add(shel)
 		db.session.commit()
-	print "Successful update"
+	
+
+def overflow(shelter_id):
+	""" checks to see if current_capacity is less than maximum_capacity """
+	shelter = Shelter.query.filter(Shelter.id == shelter_id).one()
+	if shelter.current_capacity < shelter.maximum_capacity:
+		return True
+	else:
+		return False

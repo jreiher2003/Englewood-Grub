@@ -105,13 +105,23 @@ def new_puppy():
 	if form.validate_on_submit():
 		newpuppy = Puppy(name=form.name.data, gender=form.gender.data, dateOfBirth=create_random_age(), picture=form.picture.data, shelter_id=form.shelter.data, weight=create_random_weight(), show=True)
 		db.session.add(newpuppy)
-		db.session.commit()
+		# db.session.commit()
 		newprofile = Profile(specialNeeds=form.specialNeeds.data,description=descriptions(), breed=form.breed.data, puppy_id=newpuppy.id)
 		db.session.add(newprofile)
-		db.session.commit()
-		counting_shows()
-		flash('Successfully Added '+ newpuppy.name + ' to '+ newpuppy.shelter.name, 'success')
-		return redirect(url_for('index'))
+		# db.session.commit()
+		
+		if overflow(newpuppy.shelter_id):
+			db.session.commit()
+			counting_shows()
+			flash('Successfully Added '+ newpuppy.name + ' to '+ newpuppy.shelter.name, 'success')
+
+			return redirect(url_for('index'))
+		else:
+			flash('Shelter has too many puppies try anothor')
+			db.session.rollback()
+			counting_shows()
+			return redirect(url_for('index'))
+			
 	return render_template('create_puppy.html', form=form)
 
 
