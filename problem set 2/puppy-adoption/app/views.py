@@ -119,8 +119,11 @@ def new_puppy():
 
 @app.route('/<int:shelter_id>/<path:shelter_name>/profile/<int:puppy_id>/edit/', methods=['GET','POST'])
 def edit_puppy(shelter_id,shelter_name,puppy_id):
+	shelterq = db.session.query(Shelter).all()
+	# editpuppy = Puppy.query.filter(Shelter.id==Puppy.shelter_id).one
 	editpuppy=db.session.query(Puppy).join(Profile, Puppy.id==Profile.puppy_id).filter(Puppy.id==puppy_id).one()
 	form = CreatePuppy(obj=editpuppy)
+	form.shelter.choices = [(i.id,i.name) for i in shelterq]
 	if form.validate_on_submit():
 		editpuppy.name = form.name.data
 		editpuppy.gender = form.gender.data
@@ -128,13 +131,20 @@ def edit_puppy(shelter_id,shelter_name,puppy_id):
 		editpuppy.profile.breed = form.breed.data
 		editpuppy.weight = form.weight.data
 		editpuppy.profile.specialNeeds = form.specialNeeds.data
+		editpuppy.shelter_id = form.shelter.data
 		db.session.add(editpuppy)
 		db.session.commit()
+		# shelterq = db.session.query(Shelter).all()
+		# for shel in shelterq:
+		# 	shel.currentcapacity = db.session.query(Puppy, Shelter).join(Shelter).filter(db.and_(Shelter.id == shel.id, Puppy.show==True)).count()
+		# 	db.session.add(shel)
+		# 	db.session.commit()
+
 		flash('%s was successfully edited' % editpuppy.name, 'success')
 		return redirect(url_for('puppy_profile', 
-								shelter_id=editpuppy.shelter.id,
-								shelter_name=editpuppy.shelter.name_slug,
-								puppy_id=editpuppy.id))
+							shelter_id=shelter_id,
+							shelter_name=shelter_name,
+							puppy_id=puppy_id))
 	return render_template("edit_puppy_profile.html", 
 							editpuppy=editpuppy, 
 							form=form)
