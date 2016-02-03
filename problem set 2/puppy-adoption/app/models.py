@@ -19,13 +19,22 @@ class Shelter(db.Model):
     maximum_capacity = db.Column(db.Integer)
     current_capacity = db.Column(db.Integer)
     
-    def __repr__(self):
-        return '<name>: {}'.format(self.name)
+    def __init__(self,name,address,city,state,zipCode,website,maximum_capacity,current_capacity):
+        self.name = name 
+        self.address = address
+        self.city = city 
+        self.state = state 
+        self.zipCode = zipCode
+        self.website = website 
+        self.maximum_capacity = maximum_capacity
+        self.current_capacity = current_capacity    
 
     @property 
     def name_slug(self):
         return slugify(self.name)
 
+    def __repr__(self):
+        return '<name>: {}'.format(self.name)
 
 class Puppy(db.Model):
 
@@ -42,6 +51,15 @@ class Puppy(db.Model):
     shelter = db.relationship(Shelter)
     profile = db.relationship("Profile", uselist=False, back_populates="puppy")
 
+    def __init__(self,shelter_id,name,gender,dateOfBirth,picture,weight,show):
+        self.shelter_id = shelter_id
+        self.name = name 
+        self.gender = gender
+        self.dateOfBirth = dateOfBirth
+        self.picture = picture 
+        self.weight = weight 
+        self.show = show
+
     def __repr__(self):
         return '<name>: {}'.format(self.name)
 
@@ -57,6 +75,12 @@ class Profile(db.Model):
     specialNeeds = db.Column(db.String(500))
     puppy = db.relationship("Puppy", back_populates="profile")
 
+    def __init__(self, puppy_id, breed, description,specialNeeds):
+        self.puppy_id = puppy_id
+        self.breed = breed
+        self.description = description
+        self.specialNeeds = specialNeeds
+
     def __repr__(self):
         return '<specialNeeds>: {}'.format(self.specialNeeds)
         
@@ -67,6 +91,9 @@ class Adoptors(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250))
+
+    def __init__(self,name):
+        self.name = name
 
     def __repr__(self):
         return '<name>: {}'.format(self.name)
@@ -81,9 +108,18 @@ class AdoptorsPuppies(db.Model):
     puppies = db.relationship(Puppy)
     adoptors = db.relationship(Adoptors)
 
+
+    def __init__(self, adoptor_id,puppy_id):
+        self.adoptor_id = adoptor_id
+        self.puppy_id = puppy_id
+       
+
     @property 
     def format_date(self):
         return '{dt:%A} {dt:%B} {dt.day}, {dt.year}'.format(dt=self.adopt_date)
+
+    def __repr__(self):
+        return '<date>: {}'.format(self.adopt_date)
 
 
 
