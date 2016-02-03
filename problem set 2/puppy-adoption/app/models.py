@@ -1,5 +1,6 @@
-from app import db 
+import datetime 
 
+from app import db 
 
 from slugify import slugify
  
@@ -72,12 +73,17 @@ class Adoptors(db.Model):
 
 
 class AdoptorsPuppies(db.Model):
-    __tablename__ = 'adopters_puppies'
+    __tablename__ = 'adoptors_puppies'
     
     adoptor_id = db.Column(db.Integer,db.ForeignKey('adoptors.id'), primary_key=True)
     puppy_id = db.Column(db.Integer,db.ForeignKey('puppy.id'), primary_key=True)
+    adopt_date = db.Column(db.Date, default=datetime.datetime.now())
     puppies = db.relationship(Puppy)
     adoptors = db.relationship(Adoptors)
+
+    @property 
+    def format_date(self):
+        return '{dt:%A} {dt:%B} {dt.day}, {dt.year}'.format(dt=self.adopt_date)
 
 
 
