@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<a href="{{ url_for('shelter_profile', shelter_id=puppy.shelter.id,shelter_name=puppy.shelter.name_slug, page=1) }}">Back</a><br>
 This is {{ puppy.name }}<br>
 <img src="{{ puppy.picture }}"/><br>
 {{ puppy.shelter.name }}<br>
