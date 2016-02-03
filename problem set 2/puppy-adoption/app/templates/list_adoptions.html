@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<blockquote>
+<p>List of past adoptions</p>
+<footer>Get yourself on the <cite title="List">adoption list</cite></footer>
+</blockquote>
+<ol>
 {% for adoption in adoptions %}
-{{ adoption.adoptors.name }}	has adopted  {{ adoption.puppies.name }} from {{ adoption.puppies.shelter.name }}<br>
 
+<li><mark><span class="text-primary">{{ adoption.adoptors.name }}</span></mark>	has adopted  <mark><span class="text-success">{{ adoption.puppies.name }}</span></mark> from <mark><span class="text-danger">{{ adoption.puppies.shelter.name }}</span></mark></li>
 {% endfor %}
+</ol> 
+
 {% endblock %}

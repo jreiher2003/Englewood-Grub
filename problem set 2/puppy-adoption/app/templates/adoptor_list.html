@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<a href="{{ url_for('new_adoptor') }}">Create an Adoptor</a><br><br><br>
+<a href="{{ url_for('new_adoptor') }}">Become an Adoptor</a><br><br><br>
 <h1>A list of potenial Adoptors</h1>
 {% for ad in adoptors %}
 	{{ ad.name }}

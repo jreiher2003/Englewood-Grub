@@ -2,9 +2,9 @@
 
 {% block content %}
 
-
-<h1>Create a new puppy</h1>
-
+<blockquote>
+<p>Check a puppy in to a shelter</p>
+</blockquote>
 <form method="post" class="form-horizontal"action="">
 	{{ form.csrf_token }}
 	{{ form.name.label }}{{ form.name }}<br>
