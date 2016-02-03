@@ -52,7 +52,7 @@ def new_shelter():
 							 )
 		db.session.add(newshelter)
 		db.session.commit()
-		flash("Congrats You just created a new shelter named %s" % newshelter.name, 'warning')
+		flash("<strong>Congrats</strong> You just created a new shelter named <u>%s</u>" % newshelter.name, 'warning')
 		return redirect(url_for('index'))
 	return render_template('create_shelter.html', 
 							form=form, 
@@ -77,7 +77,7 @@ def edit_shelter(shelter_id,shelter_name):
 		db.session.add(editshelter)
 		db.session.commit()
 		counting_shows()
-		flash("You just edited shelter %s" % editshelter.name, 'info')
+		flash("<strong>Update</strong>&nbsp; on <u>%s</u>" % editshelter.name, 'info')
 		return redirect(url_for('index'))
 	return render_template('edit_shelter.html', 
 							editshelter=editshelter, 
@@ -92,7 +92,7 @@ def delete_shelter(shelter_id, shelter_name):
 	if request.method == "POST":
 		db.session.delete(deleteshelter)
 		db.session.commit()
-		flash('Successfully deleted shelter %s' % deleteshelter.name, 'danger')
+		flash('<strong>Successfully</strong> deleted shelter <u>%s</u>' % deleteshelter.name, 'danger')
 		return redirect(url_for('index'))
 	return render_template('delete_shelter.html', 
 							deleteshelter=deleteshelter,
@@ -124,10 +124,10 @@ def new_puppy():
 		if overflow(newpuppy.shelter_id):
 			db.session.commit()
 			counting_shows()
-			flash('Successfully Added '+ newpuppy.name + ' to '+ newpuppy.shelter.name, 'success')
+			flash('<strong>Successfully</strong> Added '+ '<u>' + newpuppy.name + '</u>' +  'to' + newpuppy.shelter.name, 'success')
 			return redirect(url_for('index'))
 		else:
-			flash('%s has too many puppies try another'% newpuppy.shelter.name, 'danger')
+			flash('<div class="text-capitalize"><strong>%s</strong></div> has too many puppies try another shelter' % newpuppy.shelter.name, 'danger')
 			db.session.rollback()
 			counting_shows()
 			return redirect(url_for('index'))
@@ -157,14 +157,14 @@ def edit_puppy(shelter_id,shelter_name,puppy_id):
 		if overflow(editpuppy.shelter_id):
 			db.session.commit()
 			counting_shows()
-			flash('%s was successfully edited' % editpuppy.name, 'success')
+			flash('<strong>%s</strong> was successfully edited' % editpuppy.name, 'info')
 			return redirect(url_for('puppy_profile', 
 								shelter_id=shelter_id,
 								shelter_name=shelter_name,
 								puppy_id=puppy_id
 								))
 		else:
-			flash('%s has too many puppies try another'% editpuppy.shelter.name, 'danger')
+			flash('<strong>%s</strong> has too many puppies try another'% editpuppy.shelter.name, 'danger')
 			db.session.rollback()
 			counting_shows()
 			return redirect(url_for('puppy_profile', 
@@ -185,7 +185,7 @@ def delete_puppy(shelter_id, shelter_name, puppy_id):
 		db.session.delete(deletepuppy)
 		db.session.commit()
 		counting_shows()
-		flash('Puppy %s Deleted' % deletepuppy.name, 'danger')
+		flash('<strong>%s</strong>&nbsp;was just put to sleep' % deletepuppy.name, 'danger')
 		return redirect(url_for('index'))
 	return render_template('delete_puppy_profile.html', 
 							deletepuppy=deletepuppy,
@@ -211,7 +211,7 @@ def new_adoptor():
 		newadoptor = Adoptors(name=form.name.data)
 		db.session.add(newadoptor)
 		db.session.commit()
-		flash('Just created a new adoptor named %s' % newadoptor.name, 'info')
+		flash('<strong>Just created</strong> a new adoptor named <u>%s</u>' % newadoptor.name, 'info')
 		return redirect(url_for('adoptor_list'))
 	return render_template('create_adoptor.html', 
 							form=form, 
@@ -228,7 +228,7 @@ def edit_adoptor(adoptor_id):
 		editadoptor.name = form.name.data
 		db.session.add(editadoptor)
 		db.session.commit()
-		flash('Successful edit of this adoptor who is now named %s' % editadoptor.name, 'info')
+		flash('<strong>Successful</strong> edit of this adoptor who is now named <ul>%s</ul>' % editadoptor.name, 'info')
 		return redirect(url_for('adoptor_list'))
 	return render_template('edit_adoptor.html', 
 							editadoptor=editadoptor, 
@@ -243,7 +243,7 @@ def delete_adoptor(adoptor_id):
 	if request.method == 'POST':
 		db.session.delete(deleteadoptor)
 		db.session.commit()
-		flash('You just deleted %s' % deleteadoptor.name, 'danger')
+		flash('<strong>You just</strong> deleted <ul>%s</ul>' % deleteadoptor.name, 'danger')
 		return redirect(url_for('adoptor_list'))
 	return render_template('delete_adoptor.html', 
 							deleteadoptor=deleteadoptor,
@@ -273,7 +273,7 @@ def adoption_success(shelter_id,shelter_name,puppy_id,adoptor_id):
 		db.session.add(puppy)
 		db.session.commit()
 		counting_shows()
-		flash('Successful adoption', 'success')
+		flash('<strong>Successful</strong> adoption', 'success')
 		return redirect(url_for('list_adoptions'))
 	return render_template('adoption_success.html', 
 							puppy=puppy, 
