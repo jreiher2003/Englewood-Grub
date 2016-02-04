@@ -298,7 +298,7 @@ def adoption_success(shelter_id,shelter_name,puppy_id,adoptor_id):
 @app.route('/list-adoptions', methods=['GET', 'POST'])
 def list_adoptions():
 	SHELTERS = Shelter.query.all()
-	adoptions = AdoptorsPuppies.query.all()
+	adoptions = AdoptorsPuppies.query.order_by(AdoptorsPuppies.adopt_date.desc()).all()
 	return render_template('list_adoptions.html', 
 							adoptions=adoptions,
 							SHELTERS=SHELTERS)
