@@ -17,7 +17,6 @@ def index():
 	SHELTERS = Shelter.query.all()
 	""" front page of site that lists all shelters"""
 	shelter = Shelter.query.order_by(Shelter.current_capacity.desc()).all()
-	SHELTERS = Shelter.query.all()
 	error = None
 	form = CreateAdoptor()
 	if form.validate_on_submit():
@@ -38,14 +37,16 @@ def index():
 @app.route('/<int:shelter_id>/<path:shelter_name>/page/<int:page>')
 def shelter_profile(shelter_id,shelter_name, page=1):
 	SHELTERS = Shelter.query.all()
+	PUPPY = Puppy.query.filter(Puppy.shelter_id==shelter_id).all()
 	shelter_profile = Shelter.query.filter_by(id=shelter_id).one()
-	puppy = Puppy.query.filter(db.and_(Puppy.shelter_id==shelter_id, Puppy.show==True)).paginate(page,5,False)
+	puppy = Puppy.query.filter(db.and_(Puppy.shelter_id==shelter_id, Puppy.show==True)).paginate(page,4,False)
 	return render_template('shelter_profile.html', 
 							shelter_id=shelter_id,
 							shelter_name=shelter_name,
 							shelter_profile=shelter_profile,
 						    puppy=puppy,
-						    SHELTERS=SHELTERS)
+						    SHELTERS=SHELTERS,
+						    PUPPY=PUPPY)
 
 
 @app.route('/new-shelter', methods=['GET', 'POST'])
