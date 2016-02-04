@@ -27,18 +27,18 @@
 
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-lg-5 col-md-offset-1">
 		<h3>Latest Shelters</h3>
 	</div>
 </div> <!-- end row -->
 
 <div class="row text-center">
 {% for shel in shelter %}
-	<div class="col-md-5 col-md-offset-0 hero-feature">
+	<div class="col-md-5 col-md-offset-1 hero-feature">
 		<div class="thumbnail">
 			<!-- <img src="http://placehold.it/800x500" alt=""> -->
 			<div class="row">
-				<div class="col-md-3 pull-right">
+				<div class="col-md-4 pull-right">
 					<a href="{{ url_for('edit_shelter', shelter_id=shel.id, shelter_name=shel.name_slug) }}">Edit</a>&nbsp;|&nbsp;<a href="#">Delete</a>
 				</div>
 			</div> <!-- end row -->
