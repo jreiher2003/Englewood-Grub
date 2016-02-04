@@ -3,14 +3,9 @@
 {% block title %}AdoptMe.com{% endblock %}
 
 {% block content %}
-<!-- <a href="{{ url_for('new_puppy') }}">Create a Puppy</a><br>
-<a href="{{ url_for('new_shelter') }}">Create a Shelter</a><br>
-<a href="{{ url_for('new_adoptor') }}">Create an Adoptor</a><br><br><br>
-<a href="{{ url_for('adoptor_list') }}">List of Adoptors</a><br>
-<a href="{{ url_for('list_adoptions') }}">List of Adoptions</a> -->
-<header class="jumbotron">
+<header class="jumbotron hero-spacer">
 	<h1>Welcome to our puppy adoption web app!</h1>
-	<p>Please add yourself to the adoption list here</p>
+	<p>Please add yourself to the adoption list here.</p>
 	<form method="post" action="">
 		{{ form.csrf_token }}
 
@@ -24,20 +19,45 @@
 			{% endif %}
 		</span><br>
 
-		{{ form.submit(value="Become an Adoptor") }}
+		{{ form.submit(value="Become an Adoptor", class="btn btn-info") }}
 	</form>
 </header>
+<hr>
 
+
+
+<div class="row">
+	<div class="col-lg-12">
+		<h3>Latest Shelters</h3>
+	</div>
+</div> <!-- end row -->
+
+<div class="row text-center">
 {% for shel in shelter %}
-<a href="{{ url_for('shelter_profile', shelter_id=shel.id,shelter_name=shel.name_slug, page=1) }}">Link to shelter page</a><br>
-	{{ shel.name }}<br>
-	{{ shel.city }}, {{ shel.state }} {{ shel.zipCode }}<br>
-	<a href="{{ shel.website }}">{{ shel.website }}</a><br><br>
-	<p>Max Capacity: {{ shel.maximum_capacity }}</p>
-	<p>Current Capacity: {{ shel.current_capacity }}</p><br>
-	<br><br><br>
+	<div class="col-md-6 hero-feature">
+		<div class="thumbnail">
+			<!-- <img src="http://placehold.it/800x500" alt=""> -->
+			<div class="caption">
+				<a href="{{ url_for('shelter_profile', shelter_id=shel.id,shelter_name=shel.name_slug, page=1) }}">Link to shelter page</a><br>
+	
+				<h3>{{ shel.name }}</h3>
+				<p>{{ shel.city }}, {{ shel.state }} {{ shel.zipCode }}</p>
+				<p><a href="{{ shel.website }}">{{ shel.website }}</a></p>
+				<p>Current Capacity: {{ shel.current_capacity }}</p>
+				<p>Max Capacity: {{ shel.maximum_capacity }}</p>
+				<!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
+            	<p><a href="{{ url_for('shelter_profile', shelter_id=shel.id,shelter_name=shel.name_slug, page=1) }}" class="btn btn-primary">Adopt Now!</a></p>
+			</div>
+			
+
+		</div>
+	</div>
 
 {% endfor %}
+</div> <!-- end row -->
+
+	
+
 
 
 
