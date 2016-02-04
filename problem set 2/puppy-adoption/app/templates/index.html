@@ -34,12 +34,18 @@
 
 <div class="row text-center">
 {% for shel in shelter %}
-	<div class="col-md-6 hero-feature">
+	<div class="col-md-5 col-md-offset-0 hero-feature">
 		<div class="thumbnail">
 			<!-- <img src="http://placehold.it/800x500" alt=""> -->
+			<div class="row">
+				<div class="col-md-3 pull-right">
+					<a href="{{ url_for('edit_shelter', shelter_id=shel.id, shelter_name=shel.name_slug) }}">Edit</a>&nbsp;|&nbsp;<a href="#">Delete</a>
+				</div>
+			</div> <!-- end row -->
 			<div class="caption">
+
 				<a href="{{ url_for('shelter_profile', shelter_id=shel.id,shelter_name=shel.name_slug, page=1) }}">Link to shelter page</a><br>
-	
+
 				<h3>{{ shel.name }}</h3>
 				<p>{{ shel.city }}, {{ shel.state }} {{ shel.zipCode }}</p>
 				<p><a href="{{ shel.website }}">{{ shel.website }}</a></p>
