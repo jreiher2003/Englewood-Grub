@@ -3,12 +3,30 @@
 {% block title %}AdoptMe.com{% endblock %}
 
 {% block content %}
-<a href="{{ url_for('new_puppy') }}">Create a Puppy</a><br>
+<!-- <a href="{{ url_for('new_puppy') }}">Create a Puppy</a><br>
 <a href="{{ url_for('new_shelter') }}">Create a Shelter</a><br>
 <a href="{{ url_for('new_adoptor') }}">Create an Adoptor</a><br><br><br>
 <a href="{{ url_for('adoptor_list') }}">List of Adoptors</a><br>
-<a href="{{ url_for('list_adoptions') }}">List of Adoptions</a>
-<h1>Puppy Adoption Website</h1>
+<a href="{{ url_for('list_adoptions') }}">List of Adoptions</a> -->
+<header class="jumbotron">
+	<h1>Welcome to our puppy adoption web app!</h1>
+	<p>Please add yourself to the adoption list here</p>
+	<form method="post" action="">
+		{{ form.csrf_token }}
+
+		{{ form.name.label }}{{ form.name }}<br>
+
+		<span class="error bg-danger">
+			{% if form.name.errors %}
+			{% for error in form.name.errors %}
+			<div class="bg-danger">{{ error }}</div>
+			{% endfor %}
+			{% endif %}
+		</span><br>
+
+		{{ form.submit(value="Become an Adoptor") }}
+	</form>
+</header>
 
 {% for shel in shelter %}
 <a href="{{ url_for('shelter_profile', shelter_id=shel.id,shelter_name=shel.name_slug, page=1) }}">Link to shelter page</a><br>

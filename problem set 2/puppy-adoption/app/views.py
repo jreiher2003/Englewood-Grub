@@ -12,12 +12,26 @@ from werkzeug import secure_filename
 from flask import render_template, url_for, flash, redirect, request
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def index():
 	SHELTERS = Shelter.query.all()
 	""" front page of site that lists all shelters"""
 	shelter = db.session.query(Shelter).order_by("current_capacity asc").all()
-	return render_template('index.html', shelter=shelter, SHELTERS=SHELTERS)
+	SHELTERS = Shelter.query.all()
+	error = None
+	form = CreateAdoptor()
+	if form.validate_on_submit():
+		newadoptor = Adoptors(name=form.name.data)
+		db.session.add(newadoptor)
+		db.session.commit()
+		flash('<strong>Just created</strong> a new adoptor named <u>%s</u>.<br>\
+			Go Checkout the shelter pages to adopt a puppy!' % newadoptor.name, 'info')
+		return redirect(url_for('adoptor_list'))
+	return render_template('index.html', 
+							shelter=shelter, 
+							SHELTERS=SHELTERS, 
+							form=form, 
+							error=error)
 
 
 ##  CRUD for Shelter class  ##
