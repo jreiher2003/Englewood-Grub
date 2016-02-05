@@ -68,7 +68,7 @@ def new_shelter():
 							 )
 		db.session.add(newshelter)
 		db.session.commit()
-		flash("<strong>Congrats</strong> You just created a new shelter named <u>%s</u>" % newshelter.name, 'warning')
+		flash("<strong>Congrats</strong> You just created a new shelter named <u>%s</u>." % newshelter.name, 'warning')
 		return redirect(url_for('index'))
 	return render_template('create_shelter.html', 
 							form=form, 
@@ -93,7 +93,7 @@ def edit_shelter(shelter_id,shelter_name):
 		db.session.add(editshelter)
 		db.session.commit()
 		counting_shows()
-		flash("<strong>Update</strong>&nbsp; on <u>%s</u>" % editshelter.name, 'info')
+		flash("<strong>Update</strong>&nbsp; on <u>%s</u>." % editshelter.name, 'info')
 		return redirect(url_for('index'))
 	return render_template('edit_shelter.html', 
 							editshelter=editshelter, 
@@ -108,7 +108,7 @@ def delete_shelter(shelter_id, shelter_name):
 	if request.method == "POST":
 		db.session.delete(deleteshelter)
 		db.session.commit()
-		flash('<strong>Successfully</strong> deleted shelter <u>%s</u>' % deleteshelter.name, 'danger')
+		flash('<strong>Successfully</strong> deleted shelter <u>%s</u>.' % deleteshelter.name, 'danger')
 		return redirect(url_for('index'))
 	return render_template('delete_shelter.html', 
 							deleteshelter=deleteshelter,
@@ -140,10 +140,10 @@ def new_puppy():
 		if overflow(newpuppy.shelter_id):
 			db.session.commit()
 			counting_shows()
-			flash('<strong>Successfully</strong> Added '+ '<u>' + newpuppy.name + '</u>' +  'to' + newpuppy.shelter.name, 'success')
+			flash('<strong>Successfully</strong> Added '+ '<u>' + newpuppy.name + '</u>' +  ' to ' + newpuppy.shelter.name, 'success')
 			return redirect(url_for('index'))
 		else:
-			flash('<div class="text-capitalize"><strong>%s</strong></div> has too many puppies try another shelter' % newpuppy.shelter.name, 'danger')
+			flash('<div class="text-capitalize"><strong>%s</strong></div> has too many puppies try another shelter!' % newpuppy.shelter.name, 'danger')
 			db.session.rollback()
 			counting_shows()
 			return redirect(url_for('index'))
@@ -157,7 +157,7 @@ def new_puppy():
 def edit_puppy(shelter_id,shelter_name,puppy_id):
 	SHELTERS = Shelter.query.all()
 	shelterq = Shelter.query.all()
-	# editpuppy = Puppy.query.filter(Shelter.id==Puppy.shelter_id).one
+	# editpuppy = Puppy.query.filter(Shelter.id==Puppy.shelter_id).one()
 	editpuppy=db.session.query(Puppy).join(Profile, Puppy.id==Profile.puppy_id).filter(Puppy.id==puppy_id).one()
 	form = CreatePuppy(obj=editpuppy)
 	form.shelter.choices = [(i.id,i.name) for i in shelterq]
@@ -173,14 +173,14 @@ def edit_puppy(shelter_id,shelter_name,puppy_id):
 		if overflow(editpuppy.shelter_id):
 			db.session.commit()
 			counting_shows()
-			flash('<strong>%s</strong> was successfully edited' % editpuppy.name, 'info')
+			flash('<strong>%s</strong> was successfully edited!' % editpuppy.name, 'info')
 			return redirect(url_for('puppy_profile', 
 								shelter_id=shelter_id,
 								shelter_name=shelter_name,
 								puppy_id=puppy_id
 								))
 		else:
-			flash('<strong>%s</strong> has too many puppies try another'% editpuppy.shelter.name, 'danger')
+			flash('<strong>%s</strong> has too many puppies try another.'% editpuppy.shelter.name, 'danger')
 			db.session.rollback()
 			counting_shows()
 			return redirect(url_for('puppy_profile', 
@@ -201,7 +201,7 @@ def delete_puppy(shelter_id, shelter_name, puppy_id):
 		db.session.delete(deletepuppy)
 		db.session.commit()
 		counting_shows()
-		flash('<strong>%s</strong>&nbsp;was just put to sleep' % deletepuppy.name, 'danger')
+		flash('<strong>%s</strong>&nbsp;was just put to sleep!' % deletepuppy.name, 'danger')
 		return redirect(url_for('index'))
 	return render_template('delete_puppy_profile.html', 
 							deletepuppy=deletepuppy,
