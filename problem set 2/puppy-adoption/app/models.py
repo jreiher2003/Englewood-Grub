@@ -18,6 +18,7 @@ class Shelter(db.Model):
     website = db.Column(db.String)
     maximum_capacity = db.Column(db.Integer)
     current_capacity = db.Column(db.Integer)
+    puppy = db.relationship("Puppy", cascade="save-update, merge, delete")
     
     def __init__(self,name,address,city,state,zipCode,website,maximum_capacity,current_capacity):
         self.name = name 
