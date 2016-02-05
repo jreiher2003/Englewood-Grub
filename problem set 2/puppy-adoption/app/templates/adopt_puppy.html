@@ -3,9 +3,13 @@
 {% block content %}
 <form method="post" action="">
 Who do you want to adopt {{ puppy.name }}?	
+<select name="pupadopt" class="form-control selectpicker">
 {% for ad in adoptors %}
-<a href="{{ url_for('adoption_success',shelter_id=puppy.shelter.id, shelter_name=puppy.shelter.name_slug, puppy_id=puppy.id, adoptor_id=ad.id) }}">{{ ad.name }}</a><br>
+	<option  value="{{ ad.id }}">{{ ad.name }}</option>
 {% endfor %}
+</select>
+<button class="btn btn-default" type="submit">Select</button>
 
 </form>
+
 {% endblock %}

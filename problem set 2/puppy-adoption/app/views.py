@@ -272,6 +272,14 @@ def adoptions(shelter_id,shelter_name,puppy_id):
 	SHELTERS = Shelter.query.all()
 	puppy = Puppy.query.filter_by(id=puppy_id).one()
 	adoptors = db.session.query(Adoptors).all()
+	if request.method == 'POST':
+		adoptorid = request.form.get('pupadopt')
+		print adoptorid
+		return redirect(url_for('adoption_success',
+								 shelter_id=puppy.shelter.id,
+								 shelter_name=puppy.shelter.name_slug,
+								 puppy_id=puppy.id,
+								 adoptor_id=adoptorid))
 	return render_template('adopt_puppy.html',  
 							puppy=puppy, 
 							adoptors=adoptors)
