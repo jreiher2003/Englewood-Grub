@@ -259,7 +259,7 @@ def delete_adoptor(adoptor_id):
 	if request.method == 'POST':
 		db.session.delete(deleteadoptor)
 		db.session.commit()
-		flash('<strong>You just</strong> deleted <ul>%s</ul>' % deleteadoptor.name, 'danger')
+		flash('<strong>You just</strong> deleted <u>%s</u>' % deleteadoptor.name, 'danger')
 		return redirect(url_for('adoptor_list'))
 	return render_template('delete_adoptor.html', 
 							deleteadoptor=deleteadoptor,
