@@ -1,15 +1,16 @@
-from app import app, db
-from forms import CreatePuppy, CreateShelter, CreateAdoptor
-from app.models import Shelter, Puppy, Profile, Adoptors, AdoptorsPuppies
-from app.utils import *
-
 from random import randint
 import datetime
 import random
 import us
 
-from werkzeug import secure_filename
+from app import app, db
+
 from flask import render_template, url_for, flash, redirect, request
+from forms import CreatePuppy, CreateShelter, CreateAdoptor
+from app.models import Shelter, Puppy, Profile, Adoptors, AdoptorsPuppies
+from app.utils import *
+
+
 
 
 @app.route('/', methods=["GET", "POST"])
