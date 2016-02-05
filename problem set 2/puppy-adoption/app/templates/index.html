@@ -6,26 +6,24 @@
 <header class="jumbotron hero-spacer">
 	<h1>Welcome to our puppy adoption web app!</h1>
 	<p>Please add yourself to the adoption list here.</p>
+
+
 	<form method="post" action="">
 		{{ form.csrf_token }}
-
-		{{ form.name.label }}{{ form.name }}<br>
-
-		<span class="error bg-danger">
-			{% if form.name.errors %}
-			{% for error in form.name.errors %}
-			<div class="bg-danger">{{ error }}</div>
-			{% endfor %}
-			{% endif %}
-		</span><br>
-
-		{{ form.submit(value="Become an Adoptor", class="btn btn-info") }}
-	</form>
+		<div class="col-md-10 input-group input-group-lg">
+			{{ form.name(placeholder="Name...", class="form-control") }}
+			<span class="input-group-btn">{{ form.submit(value="Become an Adoptor", class="btn btn-info") }}<span>
+			</div>
+			<span class="error bg-danger">
+				{% if form.name.errors %}
+				{% for error in form.name.errors %}
+				<div class="bg-danger">{{ error }}</div>
+				{% endfor %}
+				{% endif %}
+			</span>
+		</form>
 </header>
 <hr>
-
-
-
 <div class="row">
 	<div class="col-lg-5 col-md-offset-1">
 		<h3>Latest Shelters</h3>
@@ -54,19 +52,8 @@
 				<!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
             	<p><a href="{{ url_for('shelter_profile', shelter_id=shel.id,shelter_name=shel.name_slug, page=1) }}" class="btn btn-primary">Adopt Now!</a></p>
 			</div>
-			
-
 		</div>
 	</div>
-
 {% endfor %}
 </div> <!-- end row -->
-
-	
-
-
-
-
-
-
 {% endblock %}
