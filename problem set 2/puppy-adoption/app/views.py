@@ -244,7 +244,7 @@ def edit_adoptor(adoptor_id):
 		editadoptor.name = form.name.data
 		db.session.add(editadoptor)
 		db.session.commit()
-		flash('<strong>Successful</strong> edit of this adoptor who is now named <ul>%s</ul>' % editadoptor.name, 'info')
+		flash('<strong>Successful</strong> edit of this adoptor who is now named <u>%s</u>' % editadoptor.name, 'info')
 		return redirect(url_for('adoptor_list'))
 	return render_template('edit_adoptor.html', 
 							editadoptor=editadoptor, 
@@ -274,7 +274,6 @@ def adoptions(shelter_id,shelter_name,puppy_id):
 	adoptors = db.session.query(Adoptors).all()
 	if request.method == 'POST':
 		adoptorid = request.form.get('pupadopt')
-		print adoptorid
 		return redirect(url_for('adoption_success',
 								 shelter_id=puppy.shelter.id,
 								 shelter_name=puppy.shelter.name_slug,
