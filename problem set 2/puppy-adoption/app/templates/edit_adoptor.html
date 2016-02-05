@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Edit an Adoptor</h1>
+<div class="row">
+	<div class="col-xs-12 col-md-6 col-md-offset-3">
+
+<h1 class="text-center">Edit an Adoptor</h1>
 
 <form method="post" action="">
 	{{ form.csrf_token }}
 	
-{{ form.name.label }}{{ form.name }}<br>
+{{ form.name(class="form-control", placeholder="Add your name here...") }}<br>
+
 <span class="error bg-danger">
 {% if form.name.errors %}
 {% for error in form.name.errors %}
@@ -14,8 +18,12 @@
 {% endfor %}
 {% endif %}
 </span><br>
-{{ form.submit(value="Edit") }}
+
+{{ form.submit(value="Edit an Adoptor", class="form-control btn btn-danger") }}
 </form>
+
+</div>
+</div>
 
 
 {% endblock %}
