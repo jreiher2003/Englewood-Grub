@@ -130,13 +130,15 @@ def puppy_profile(shelter_id,shelter_name,puppy_id):
 def new_puppy():
 	SHELTERS = Shelter.query.all()
 	shelterq = Shelter.query.all()
-	form = CreatePuppy(obj=shelterq)
+	form = CreatePuppy()
 	form.shelter.choices = [(i.id,i.name) for i in shelterq]
 	if form.validate_on_submit():
 		newpuppy = Puppy(name=form.name.data, gender=form.gender.data, dateOfBirth=create_random_age(), picture=form.picture.data, shelter_id=form.shelter.data, weight=create_random_weight(), show=True)
 		db.session.add(newpuppy)
-		newprofile = Profile(specialNeeds=form.specialNeeds.data,description=descriptions(), breed=form.breed.data, puppy_id=newpuppy.id)
+		db.session.commit()
+		newprofile = Profile(breed=form.breed.data, specialNeeds=form.specialNeeds.data, description=descriptions(), puppy_id=newpuppy.id)
 		db.session.add(newprofile)
+		db.session.commit()
 		if overflow(newpuppy.shelter_id):
 			db.session.commit()
 			counting_shows()

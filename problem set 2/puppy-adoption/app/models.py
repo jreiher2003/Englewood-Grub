@@ -50,7 +50,7 @@ class Puppy(db.Model):
     weight = db.Column(db.Numeric(10))
     show = db.Column(db.Boolean, default=True)
     shelter = db.relationship(Shelter)
-    profile = db.relationship("Profile", uselist=False, back_populates="puppy")
+    profile = db.relationship("Profile", uselist=False, back_populates="puppy", cascade="save-update, merge, delete")
 
     def __init__(self,shelter_id,name,gender,dateOfBirth,picture,weight,show):
         self.shelter_id = shelter_id
