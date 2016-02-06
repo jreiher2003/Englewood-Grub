@@ -54,10 +54,11 @@
               <div class="thumbnail">
                  <img src="{{ pup.picture }}" alt="">
                  <div class="caption">
+
                     <!-- <h4 class="pull-right">$24.99</h4> -->
                     <h4><a href="{{ url_for('puppy_profile', shelter_id=pup.shelter.id,shelter_name=pup.shelter.name_slug, puppy_id=pup.id) }}">{{ pup.name }}</a>
                     </h4>
-                    <p>{{ pup.profile.description }}</p> <br>
+                    <p>{{ pup.profile.description }}{{ pup.page }}</p> <br>
                     <a href="{{ url_for('puppy_profile', shelter_id=pup.shelter.id,shelter_name=pup.shelter.name_slug, puppy_id=pup.id) }}" class='btn btn-info'>Adopt</a>
                 </div><!-- end caption -->
                 <div class="ratings">
@@ -86,6 +87,20 @@
           <li><a class="btn disabled">Previous</a></li>
           {% endif %} 
 
+ 
+  {%- for page in puppy.iter_pages() %}
+    {% if page %}
+      {% if page != puppy.page %}
+        <a class="btn btn-default" href="#">{{ page }}</a>
+      {% else %}
+        <strong>{{ page }}</strong>
+      {% endif %}
+    {% else %}
+      <span class='ellipsis'>…</span>
+    {% endif %}
+  {%- endfor %}
+  
+
           {% if puppy.has_next %}
           <li><a href="{{ url_for('shelter_profile', shelter_id=shelter_id, shelter_name=shelter_name, page=puppy.next_num) }}">Next</a></li>
           {% else %}
@@ -94,6 +109,7 @@
 
       </ul>
   </nav>
+
 
 </div><!--  end col-12 -->
 </div> <!-- end col-md- -->
