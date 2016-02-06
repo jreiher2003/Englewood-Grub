@@ -92,6 +92,7 @@ class Adoptors(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250))
+    adoptor_puppies = db.relationship('AdoptorsPuppies', cascade="save-update, merge, delete")
 
     def __init__(self,name):
         self.name = name
