@@ -79,7 +79,7 @@
     <div class="col-md-12 text-center">
 
       <nav>
-         <ul class="pagination">
+         <ul class="pagination pagination-lg">
 
           {% if puppy.has_prev %}
           <li><a href="{{ url_for('shelter_profile', shelter_id=shelter_id, shelter_name=shelter_name, page=puppy.prev_num) }}">Previous</a></li>
@@ -87,18 +87,18 @@
           <li><a class="btn disabled">Previous</a></li>
           {% endif %} 
 
- 
-  {%- for page in puppy.iter_pages() %}
+ {% for page in puppy.iter_pages() %}
+
     {% if page %}
       {% if page != puppy.page %}
-        <a class="btn btn-default" href="#">{{ page }}</a>
-      {% else %}
-        <strong>{{ page }}</strong>
+
+       <li><a class="btn btn-default" href="#">{{ page }}</a></li>
+       {% else %}
+      <li><a class="btn btn-info active" href="#">{{ page }}</a></li>
       {% endif %}
-    {% else %}
-      <span class='ellipsis'>…</span>
-    {% endif %}
-  {%- endfor %}
+      {% endif %}
+   
+  {% endfor %}
   
 
           {% if puppy.has_next %}
@@ -109,6 +109,7 @@
 
       </ul>
   </nav>
+
 
 
 </div><!--  end col-12 -->
