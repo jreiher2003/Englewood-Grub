@@ -92,9 +92,9 @@
         {% if page %}
         {% if page != puppy.page %}
 
-        <li><a class="btn btn-default" href="#">{{ page }}</a></li>
+        <li><a class="btn btn-default" href="{{ url_for('shelter_profile',shelter_id=shelter_id, shelter_name=shelter_name, page=page) }}">{{ page }}</a></li>
         {% else %}
-        <li><a class="btn btn-info active" href="#">{{ page }}</a></li>
+        <li><a class="btn btn-info active" href="{{ url_for('shelter_profile',shelter_id=shelter_id, shelter_name=shelter_name, page=page) }}">{{ page }}</a></li>
         {% endif %}
         {% endif %}
         
