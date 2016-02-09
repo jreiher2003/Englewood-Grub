@@ -4,9 +4,9 @@ import os
 class BaseConfig(object):
     DEBUG = False
     SECRET_KEY = 'sM\xe4\xfcF\xbf>9\x93\xdf\xfa\x98'
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-    print SQLALCHEMY_DATABASE_URI
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    # print SQLALCHEMY_DATABASE_URI
    
 
 class TestConfig(BaseConfig):
@@ -14,11 +14,12 @@ class TestConfig(BaseConfig):
     TESTING = True
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
-    print SQLALCHEMY_DATABASE_URI
+    # print SQLALCHEMY_DATABASE_URI
 
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
+    # print SQLALCHEMY_DATABASE_URI
 
 
 class ProductionConfig(BaseConfig):
