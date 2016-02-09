@@ -1,12 +1,12 @@
 import unittest
 from flask.ext.testing import TestCase
 from app import app, db
-from app.models import Shelter, Puppy, Profile, Adoptors
+from app.models import Shelter, Puppy, Profile, Adoptors, AdoptorsPuppies
 
 
 class BaseTestCase(TestCase):
     """A base test case."""
-
+ 
     def create_app(self):
         app.config.from_object('config.TestConfig')
         print app.config.from_object('config.TestConfig')
