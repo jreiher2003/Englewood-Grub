@@ -10,7 +10,6 @@ class BaseTestCase(TestCase):
  
     def create_app(self):
         app.config.from_object('config.TestConfig')
-        print app.config.from_object('config.TestConfig')
         return app
 
     def setUp(self):
@@ -33,6 +32,8 @@ class FlaskTestCase(BaseTestCase):
     def test_index(self):
         response = self.client.get('/', content_type='html/text')
         self.assertEqual(response.status_code, 200)
+
+
 
     # Ensure that the login page loads correctly
     def test_index_page_loads(self):
@@ -132,7 +133,18 @@ class FlaskTestCase(BaseTestCase):
         self.assertIn(b'Add a shelter', response.data)
 
 
+    def test_add_new_adoptor(self):
+        response = self.client.post('/new-adoptor', data=dict(name='Jefftest'))
+        self.assertEqual(response.status_code, 302)
+        
+
+    # def test_new_adoptor_page_loads(self):
+    #     response = self.client.get('/adoptors')
+    #     self.assertIn(b'Jefftest', response.data)
 
 
-if __name__ == '__main__':
-    unittest.main()
+
+# if __name__ == '__main__':
+#     # unittest.main()
+#     suite = unittest.TestLoader().loadTestsFromTestCase(FlaskTestCase)
+#     unittest.TextTestRunner(verbosity=2).run(suite)

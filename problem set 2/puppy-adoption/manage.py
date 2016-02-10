@@ -1,4 +1,7 @@
 import os
+import unittest
+import coverage
+# from flask.ext.testing import Test
 from app import app,db
 
 from flask.ext.script import Manager 
@@ -10,11 +13,27 @@ manager = Manager(app)
 
 manager.add_command('db', MigrateCommand)
 
-@manager.add_command
+@manager.command
 def test():
 	"""Runs the tests without coverage."""
-	tests = unittest.Testloader().discover('.')
+	tests = unittest.TestLoader().discover('.')
 	unittest.TextTestRunner(verbosity=2).run(tests)
+
+@manager.command
+def cov():
+    """Runs the unit tests with coverage."""
+    cov = coverage.coverage(branch=True, include='app/*')
+    cov.start()
+    tests = unittest.TestLoader().discover('.')
+    unittest.TextTestRunner(verbosity=2).run(tests)
+    cov.stop()
+    cov.save()
+    print 'Coverage Summary:'
+    cov.report()
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    covdir = os.path.join(basedir, 'coverage')
+    cov.html_report(directory=covdir)
+    cov.erase()
 
 if __name__ == '__main__':
 	manager.run()
