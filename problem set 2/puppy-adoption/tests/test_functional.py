@@ -1,29 +1,5 @@
 import unittest
-import datetime
-from flask.ext.testing import TestCase
-from app import app, db
-from app.models import Shelter, Puppy, Profile, Adoptors, AdoptorsPuppies
-
-
-class BaseTestCase(TestCase):
-    """A base test case."""
- 
-    def create_app(self):
-        app.config.from_object('config.TestConfig')
-        return app
-
-    def setUp(self):
-        db.create_all()
-        db.session.add(Adoptors(name='Testname'))
-        db.session.add(Shelter(name="Testshelter", address="123 Fake st.", city="Fake", state="FK", zipCode="12345", website="http://test.com", maximum_capacity=10, current_capacity=5))
-        db.session.add(Puppy(name="Testpup", shelter_id=1, gender="Male", dateOfBirth=datetime.datetime.now(),picture="http://testpup.com",weight=1, show=True))
-        db.session.add(Profile(puppy_id=1, breed="Testbreed",description="This is a test description", specialNeeds="Testblind"))
-        db.session.add(AdoptorsPuppies(adoptor_id=1, puppy_id=1))
-        db.session.commit()
-
-    def tearDown(self):
-        db.session.remove()
-        db.drop_all()
+from base import BaseTestCase
 
 
 class FlaskTestCase(BaseTestCase):
@@ -32,8 +8,6 @@ class FlaskTestCase(BaseTestCase):
     def test_index(self):
         response = self.client.get('/', content_type='html/text')
         self.assertEqual(response.status_code, 200)
-
-
 
     # Ensure that the login page loads correctly
     def test_index_page_loads(self):
@@ -137,14 +111,3 @@ class FlaskTestCase(BaseTestCase):
         response = self.client.post('/new-adoptor', data=dict(name='Jefftest'))
         self.assertEqual(response.status_code, 302)
         
-
-    # def test_new_adoptor_page_loads(self):
-    #     response = self.client.get('/adoptors')
-    #     self.assertIn(b'Jefftest', response.data)
-
-
-
-# if __name__ == '__main__':
-#     # unittest.main()
-#     suite = unittest.TestLoader().loadTestsFromTestCase(FlaskTestCase)
-#     unittest.TextTestRunner(verbosity=2).run(suite)
