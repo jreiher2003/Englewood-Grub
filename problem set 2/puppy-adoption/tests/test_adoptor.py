@@ -7,10 +7,12 @@ class TestAdoptorCase(BaseTestCase):
     def test_adoptors(self):
         response = self.client.get('/adoptors', content_type='html/text')
         self.assertEqual(response.status_code, 200)
+        self.assertIn(b'A list of potenial Adoptors', response.data)
+        self.assertIn(b'Testname', response.data)
 
     # Ensure that the /adoptors page loads correctly
     def test_adoptors_page_loads(self):
-        response = self.client.get('/adoptors')
+        response = self.client.get('/adoptors',content_type='html/text')
         self.assertIn(b'A list of potenial Adoptors', response.data)
         self.assertIn(b'Testname', response.data)
 
@@ -18,19 +20,26 @@ class TestAdoptorCase(BaseTestCase):
     def test_new_adoptor(self):
         response = self.client.get('/new-adoptor', content_type='html/text')
         self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Become an Adoptor', response.data)
 
     def test_add_new_adoptor(self):
         response = self.client.post('/new-adoptor', data=dict(name='Jefftest'), follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
         self.assertIn(b'<strong>Just created</strong> a new adoptor named <u>Jefftest</u>', response.data)
+
 
     def test_add_new_adoptor_from_index(self):
         response = self.client.post('/', data=dict(name='Jefftest1'), follow_redirects=True)
         self.assertIn(b'<strong>Just created</strong> a new adoptor named <u>Jefftest1</u>', response.data)
 
-    def test_adoptors_delete_status(self):
-        response = self.client.get('/adoptors/profile/2/delete', content_type='html/text')
-        self.assertEqual(response.status_code, 301)
+    def test_add_new_adoptor_from_index_test_error(self):
+        response = self.client.post('/', data=dict(name=''), follow_redirects=True)
+        self.assertIn(b'This field is required.', response.data)
 
-    def test_adoptors_edit_status(self):
-        response = self.client.get('/adoptors/profile/2/edit', content_type='html/text')
-        self.assertEqual(response.status_code, 301)
+    # def test_adoptors_delete_status(self):
+    #     response = self.client.get('/adoptors/profile/2/delete', content_type='html/text')
+    #     self.assertEqual(response.status_code, 301)
+
+    # def test_adoptors_edit_status(self):
+    #     response = self.client.get('/adoptors/profile/2/edit', content_type='html/text')
+    #     self.assertEqual(response.status_code, 301)
