@@ -9,26 +9,6 @@ class FlaskTestCase(BaseTestCase):
         response = self.client.get('/', content_type='html/text')
         self.assertEqual(response.status_code, 200)
 
-    # Ensure that the login page loads correctly
-    def test_index_page_loads(self):
-        response = self.client.get('/')
-        self.assertIn(b'Welcome to our puppy adoption web app!', response.data)
-        self.assertIn(b'Testshelter', response.data)
-
-    # ensure that /id/name/page/1 response is correct
-    def test_shelter_profile(self):
-        response = self.client.get('/', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
-
-    # Ensure that the shelter profile loads correctly
-    def test_shelter_profile_page_loads(self):
-        response = self.client.get('/1/testshelter/page/1')
-        self.assertIn(b'Testshelter', response.data)
-        self.assertIn(b'123 Fake st.', response.data)
-        self.assertIn(b'Fake', response.data)
-        self.assertIn(b'http://test.com', response.data)
-        self.assertIn(b'Testpup', response.data)
-
     # Ensure that puppy-profile correctly
     def test_puppy_profile(self):
         response = self.client.get('/1/testshelter/profile/1', content_type='html/text')
@@ -64,17 +44,7 @@ class FlaskTestCase(BaseTestCase):
         response = self.client.get('/1/testshelter/profile/1/adopt/1/')
         self.assertIn(b'Are you sure you want <mark>Testpup</mark> to be adopted by <mark>Testname</mark>?', response.data)
     
-      # Ensure that /adoptors response correctly
-    def test_adoptors(self):
-        response = self.client.get('/adoptors', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
-
-    # Ensure that the /adoptors page loads correctly
-    def test_adoptors_page_loads(self):
-        response = self.client.get('/adoptors')
-        self.assertIn(b'A list of potenial Adoptors', response.data)
-        self.assertIn(b'Testname', response.data)
-
+     
       # Ensure that list-adoptions response is correct
     def test_list_adoptions(self):
         response = self.client.get('/list-adoptions', content_type='html/text')
@@ -86,28 +56,12 @@ class FlaskTestCase(BaseTestCase):
         self.assertIn(b'List of past adoptions', response.data)
         self.assertIn(b'Testname</span></mark>\thas adopted  <mark><span class="text-success">Testpup</span></mark> from <mark><span class="text-danger">Testshelter', response.data)
 
-     # Ensure that /new-puppy response is correct
-    def test_new_puppy_adoptions(self):
-        response = self.client.get('/new-puppy', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
+     
 
-    # Ensure that the /new-puppy page loads correctly
-    def test_new_puppy_page_loads(self):
-        response = self.client.get('/new-puppy')
-        self.assertIn(b'Check a puppy in to a shelter', response.data)
-
-     # Ensure that /new-shelterresponse is correct
-    def test_new_shelter_adoptions(self):
-        response = self.client.get('/new-shelter', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
-
-    # Ensure that the /new-puppy page loads correctly
-    def test_new_shelter_page_loads(self):
-        response = self.client.get('/new-shelter')
-        self.assertIn(b'Add a shelter', response.data)
+    
 
 
-    def test_add_new_adoptor(self):
-        response = self.client.post('/new-adoptor', data=dict(name='Jefftest'))
-        self.assertEqual(response.status_code, 302)
+   
+
+
         
