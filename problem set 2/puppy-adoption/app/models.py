@@ -1,8 +1,8 @@
-import datetime 
+import datetime # pragma: no cover
 
-from app import db 
+from app import db # pragma: no cover
 
-from slugify import slugify
+from slugify import slugify # pragma: no cover
  
         
 class Shelter(db.Model):
