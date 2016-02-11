@@ -1,14 +1,14 @@
-from random import randint
-import datetime
-import random
-import us
+from random import randint # pragma: no cover
+import datetime # pragma: no cover
+import random # pragma: no cover
+import us # pragma: no cover
 
-from app import app, db
-
-from flask import render_template, url_for, flash, redirect, request
-from forms import CreatePuppy, CreateShelter, CreateAdoptor
-from app.models import Shelter, Puppy, Profile, Adoptors, AdoptorsPuppies
-from app.utils import *
+from app import app, db # pragma: no cover
+ 
+from flask import render_template, url_for, flash, redirect, request # pragma: no cover
+from forms import CreatePuppy, CreateShelter, CreateAdoptor # pragma: no cover
+from app.models import Shelter, Puppy, Profile, Adoptors, AdoptorsPuppies # pragma: no cover
+from app.utils import * # pragma: no cover
 
 
 
