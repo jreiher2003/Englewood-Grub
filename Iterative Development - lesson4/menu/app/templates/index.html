@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}Englewood Grub{% endblock %}
 {% block description %}{% endblock %}
+
 {% block content %}
-Hello World
+
+{% for place in all_places %}
+	<a href="#">{{ place.name }}</a><br>
+{% endfor %}
+
 {% endblock %}
